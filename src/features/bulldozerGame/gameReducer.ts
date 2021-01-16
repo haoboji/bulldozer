@@ -9,6 +9,7 @@ import { Bulldozer, Location } from "./bulldozer";
 import { DIRECTION_EAST, GameStatus } from "./constant";
 import { SiteMap } from "./site";
 import { add, multiply } from "mathjs";
+import { isLocationValid } from "./helper";
 
 export interface GameState {
   map: SiteMap | null;
@@ -38,8 +39,12 @@ const game = (
     case ADVANCE_BULLDOZER: {
       const { location, direction } = state.bulldozer;
       const newLocation = add(location, direction) as Location;
+      const status = isLocationValid(newLocation, state.map)
+        ? state.status
+        : GameStatus.Error;
       return {
         ...state,
+        status,
         bulldozer: { ...state.bulldozer, location: newLocation },
       };
     }
