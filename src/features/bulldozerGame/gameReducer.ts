@@ -6,19 +6,27 @@ import {
   SET_SITE_MAP,
 } from "./actionTypes";
 import { Bulldozer, Location } from "./bulldozer";
-import { DIRECTION_EAST, GameStatus } from "./constant";
+import {
+  Command,
+  DIRECTION_EAST,
+  GameStatus,
+  ROTATION_RIGHT,
+} from "./constant";
 import { SiteMap } from "./site";
 import { add, multiply } from "mathjs";
 import { isLocationValid } from "./helper";
+import { Activity } from "./report";
 
 export interface GameState {
   map: SiteMap | null;
   status: GameStatus;
   bulldozer: Bulldozer;
+  commands: Command[];
+  activities: Activity[];
 }
 
 const initialBulldozer: Bulldozer = {
-  location: [0, -1],
+  location: [-1, 0],
   direction: DIRECTION_EAST,
 };
 
@@ -26,6 +34,8 @@ export const initialGameState: GameState = {
   map: null,
   bulldozer: initialBulldozer,
   status: GameStatus.Starting,
+  commands: [],
+  activities: [],
 };
 
 const game = (
@@ -37,28 +47,51 @@ const game = (
       return { ...state, map: action.map };
     }
     case ADVANCE_BULLDOZER: {
-      const { location, direction } = state.bulldozer;
+      const { activities, bulldozer, map, commands } = state;
+      const { location, direction } = bulldozer;
       const newLocation = add(location, direction) as Location;
+      const [x, y] = newLocation;
+      const terrain = map?.[y]?.[x];
+      const newActivities = terrain
+        ? [
+            ...activities,
+            {
+              terrain,
+              location: newLocation,
+            },
+          ]
+        : activities;
       const status = isLocationValid(newLocation, state.map)
         ? state.status
         : GameStatus.Error;
       return {
         ...state,
         status,
-        bulldozer: { ...state.bulldozer, location: newLocation },
+        activities: newActivities,
+        commands: [...commands, Command.Advance],
+        bulldozer: { ...bulldozer, location: newLocation },
       };
     }
     case ROTATE_BULLDOZER: {
-      const { direction } = state.bulldozer;
+      const { commands, bulldozer } = state;
+      const { direction } = bulldozer;
       const { rotation } = action;
       const newDirection = multiply(direction, rotation);
+      const command =
+        rotation === ROTATION_RIGHT ? Command.Right : Command.Left;
       return {
         ...state,
-        bulldozer: { ...state.bulldozer, direction: newDirection },
+        commands: [...commands, command],
+        bulldozer: { ...bulldozer, direction: newDirection },
       };
     }
     case END_SIMULATION: {
-      return { ...state, status: GameStatus.Ended };
+      const { commands } = state;
+      return {
+        ...state,
+        commands: [...commands, Command.Quit],
+        status: GameStatus.Ended,
+      };
     }
     default: {
       return state;
