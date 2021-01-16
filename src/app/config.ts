@@ -3,7 +3,7 @@ import {
   PLAIN_LAND,
   REMOVABLE_TREE,
   ROCKY_LAND,
-} from "../features/bulldozerGame/constant";
+} from "../features/bulldozerGame/state/constant";
 
 export default {
   fuelUsage: {
