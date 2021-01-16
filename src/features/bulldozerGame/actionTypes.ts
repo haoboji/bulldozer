@@ -4,6 +4,7 @@ import { SiteMap } from "./site";
 export const SET_SITE_MAP = "SET_SITE_MAP";
 export const ADVANCE_BULLDOZER = "ADVANCE_BULLDOZER";
 export const ROTATE_BULLDOZER = "ROTATE_BULLDOZER";
+export const END_SIMULATION = "END_SIMULATION";
 
 export interface SetSiteMapAction {
   type: typeof SET_SITE_MAP;
@@ -19,7 +20,12 @@ export interface RotateBulldozerAction {
   rotation: Rotation;
 }
 
+export interface EndSimulationAction {
+  type: typeof END_SIMULATION;
+}
+
 export type BulldozerGameAction =
   | SetSiteMapAction
   | AdvanceBulldozerAction
-  | RotateBulldozerAction;
+  | RotateBulldozerAction
+  | EndSimulationAction;

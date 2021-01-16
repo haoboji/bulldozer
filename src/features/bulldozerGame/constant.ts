@@ -19,3 +19,10 @@ export const ROTATION_RIGHT: Rotation = [
   [0, -1],
   [1, 0],
 ];
+
+export enum GameStatus {
+  Starting,
+  Started,
+  Error,
+  Ended,
+}

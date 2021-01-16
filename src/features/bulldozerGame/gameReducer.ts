@@ -1,16 +1,18 @@
 import {
   ADVANCE_BULLDOZER,
   BulldozerGameAction,
+  END_SIMULATION,
   ROTATE_BULLDOZER,
   SET_SITE_MAP,
 } from "./actionTypes";
 import { Bulldozer, Location } from "./bulldozer";
-import { DIRECTION_EAST } from "./constant";
+import { DIRECTION_EAST, GameStatus } from "./constant";
 import { SiteMap } from "./site";
 import { add, multiply } from "mathjs";
 
 export interface GameState {
   map: SiteMap | null;
+  status: GameStatus;
   bulldozer: Bulldozer;
 }
 
@@ -19,9 +21,16 @@ const initialBulldozer: Bulldozer = {
   direction: DIRECTION_EAST,
 };
 
-const initialState: GameState = { map: null, bulldozer: initialBulldozer };
+export const initialGameState: GameState = {
+  map: null,
+  bulldozer: initialBulldozer,
+  status: GameStatus.Starting,
+};
 
-const game = (state = initialState, action: BulldozerGameAction): GameState => {
+const game = (
+  state = initialGameState,
+  action: BulldozerGameAction
+): GameState => {
   switch (action.type) {
     case SET_SITE_MAP: {
       return { ...state, map: action.map };
@@ -42,6 +51,9 @@ const game = (state = initialState, action: BulldozerGameAction): GameState => {
         ...state,
         bulldozer: { ...state.bulldozer, direction: newDirection },
       };
+    }
+    case END_SIMULATION: {
+      return { ...state, status: GameStatus.Ended };
     }
     default: {
       return state;
