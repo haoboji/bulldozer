@@ -24,7 +24,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext 'ts,tsx,json' src",
-    "lint-fix": "eslint --fix --ext 'ts,tsx,json' src"
+    "lint-fix": "eslint --fix --ext 'ts,tsx,json' src",
+    "coverage": "react-scripts test --coverage"
   },
   "eslintConfig": {
     "extends": [
