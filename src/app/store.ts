@@ -1,6 +1,8 @@
 import { createStore } from "redux";
-import rootReducer from "./rootReducer";
+import rootReducer, { AppState } from "./rootReducer";
 
-const store = createStore(rootReducer);
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const createAppStore = (preloadedState?: Partial<AppState>) =>
+  createStore(rootReducer, preloadedState);
 
-export default store;
+export default createAppStore();
