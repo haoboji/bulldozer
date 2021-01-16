@@ -1,12 +1,13 @@
 import {
   ADVANCE_BULLDOZER,
   BulldozerGameAction,
+  ROTATE_BULLDOZER,
   SET_SITE_MAP,
 } from "./actionTypes";
 import { Bulldozer, Location } from "./bulldozer";
 import { DIRECTION_EAST } from "./constant";
 import { SiteMap } from "./site";
-import { add } from "mathjs";
+import { add, multiply } from "mathjs";
 
 export interface GameState {
   map: SiteMap | null;
@@ -31,6 +32,15 @@ const game = (state = initialState, action: BulldozerGameAction): GameState => {
       return {
         ...state,
         bulldozer: { ...state.bulldozer, location: newLocation },
+      };
+    }
+    case ROTATE_BULLDOZER: {
+      const { direction } = state.bulldozer;
+      const { rotation } = action;
+      const newDirection = multiply(direction, rotation);
+      return {
+        ...state,
+        bulldozer: { ...state.bulldozer, direction: newDirection },
       };
     }
     default: {
