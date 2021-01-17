@@ -30,7 +30,12 @@ const Land = (props: LandProps): JSX.Element => {
   );
 
   return (
-    <Paper variant="outlined" className={classNames} {...paperProps}>
+    <Paper
+      data-testid={`terrain-${terrain}`}
+      variant="outlined"
+      className={classNames}
+      {...paperProps}
+    >
       {children}
     </Paper>
   );

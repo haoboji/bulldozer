@@ -4,18 +4,23 @@ exports[`Land styles 1`] = `
 <div>
   <div
     class="MuiPaper-root makeStyles-root-7 makeStyles-green-12 MuiPaper-outlined MuiPaper-rounded"
+    data-testid="terrain-T"
   />
   <div
     class="MuiPaper-root makeStyles-root-13 makeStyles-lightgreen-17 MuiPaper-outlined MuiPaper-rounded"
+    data-testid="terrain-t"
   />
   <div
     class="MuiPaper-root makeStyles-root-19 makeStyles-lightsteelblue-22 MuiPaper-outlined MuiPaper-rounded"
+    data-testid="terrain-r"
   />
   <div
     class="MuiPaper-root makeStyles-root-25 makeStyles-lightgoldenrodyellow-27 MuiPaper-outlined MuiPaper-rounded"
+    data-testid="terrain-o"
   />
   <div
     class="MuiPaper-root makeStyles-root-31 makeStyles-white-32 MuiPaper-outlined MuiPaper-rounded"
+    data-testid="terrain-c"
   />
 </div>
 `;

@@ -6,23 +6,33 @@ import {
   GridChildComponentProps,
 } from "react-window";
 import Land from "./Land";
+import { Location } from "./state/bulldozer";
 
 export interface SiteProps extends Partial<FixedSizeGridProps> {
   map: SiteMap;
+  TileChildren?: (props: { location: Location }) => JSX.Element;
 }
 
-const makeTiles = (map: SiteMap) => {
-  const Tile = (props: GridChildComponentProps) => (
-    <div data-testid="tile" style={props.style}>
-      <Land terrain={map[props.columnIndex][props.rowIndex]} />
-    </div>
-  );
+const makeTiles = (
+  map: SiteProps["map"],
+  TileChildren: SiteProps["TileChildren"]
+) => {
+  const Tile = (props: GridChildComponentProps) => {
+    const { columnIndex, rowIndex } = props;
+    return (
+      <div data-testid="tile" style={props.style}>
+        <Land terrain={map[props.columnIndex][props.rowIndex]}>
+          {TileChildren && <TileChildren location={[columnIndex, rowIndex]} />}
+        </Land>
+      </div>
+    );
+  };
   return Tile;
 };
 
 const Site = (props: SiteProps): JSX.Element => {
-  const { map, ...otherProps } = props;
-  const children = makeTiles(map);
+  const { map, TileChildren, ...otherProps } = props;
+  const children = makeTiles(map, TileChildren);
   const rootProps: FixedSizeGridProps = {
     columnCount: map.length,
     rowCount: map[0].length,
