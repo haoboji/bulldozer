@@ -49,9 +49,11 @@ const WelcomePage = (props: WelcomePageProps): JSX.Element => {
             Upload site map
           </Button>
         </label>
-        <Button {...buttonProps} onClick={onClickDefaultMap}>
-          Use default map
-        </Button>
+        {onClickDefaultMap && (
+          <Button {...buttonProps} onClick={onClickDefaultMap}>
+            Use default map
+          </Button>
+        )}
       </div>
     </div>
   );
