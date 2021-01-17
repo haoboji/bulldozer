@@ -1,5 +1,10 @@
 import { Location } from "./bulldozer";
-import { PRESERVED_TREE } from "./constant";
+import {
+  PLAIN_LAND,
+  PRESERVED_TREE,
+  REMOVABLE_TREE,
+  ROCKY_LAND,
+} from "./constant";
 import { SiteMap } from "./site";
 
 export const isLocationValid = (
@@ -16,4 +21,41 @@ export const isLocationValid = (
     return false;
   }
   return true;
+};
+
+export const parseFile = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      resolve(fileReader.result as string);
+    };
+    fileReader.onerror = () => {
+      reject(Error("Invalid file"));
+    };
+    fileReader.readAsText(file);
+  });
+
+export const parseMap = (content: string): SiteMap => {
+  const rawMap = content
+    .trim()
+    .split("\n")
+    .map((row) => row.split(""));
+  const abnormalRow = rawMap.find((r) => r.length !== rawMap[0].length);
+  if (abnormalRow) {
+    throw Error("Invalid map shape");
+  }
+  const invalidTile = rawMap.find(
+    (row) =>
+      !!row.find(
+        (t) =>
+          t !== PRESERVED_TREE &&
+          t !== REMOVABLE_TREE &&
+          t !== ROCKY_LAND &&
+          t !== PLAIN_LAND
+      )
+  );
+  if (invalidTile) {
+    throw Error("Invalid map tile");
+  }
+  return rawMap as SiteMap;
 };

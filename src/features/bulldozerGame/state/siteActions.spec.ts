@@ -1,7 +1,7 @@
 import { createAppStore } from "../../../app/store";
 import { GameStatus, PLAIN_LAND } from "./constant";
 import { SiteMap } from "./site";
-import { endSimuation, setSiteMap } from "./siteActions";
+import { endSimuation, setSiteMap, uploadSiteMap } from "./siteActions";
 
 test("Set site map", () => {
   const s = createAppStore();
@@ -15,4 +15,14 @@ test("End simulation", () => {
   expect(s.getState().game.status).toEqual(GameStatus.Starting);
   s.dispatch(endSimuation());
   expect(s.getState().game.status).toEqual(GameStatus.Ended);
+});
+
+test("Upload file", async () => {
+  const s = createAppStore();
+  const fileList = ([new File(["oo\noo"], "a.txt")] as unknown) as FileList;
+  await uploadSiteMap(s.dispatch, fileList);
+  expect(s.getState().game.map).toEqual([
+    ["o", "o"],
+    ["o", "o"],
+  ]);
 });
