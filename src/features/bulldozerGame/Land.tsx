@@ -28,6 +28,7 @@ const Land = (props: LandProps): JSX.Element => {
     terrain === CLEARED_LAND && classes.white,
     className
   );
+
   return (
     <Paper variant="outlined" className={classNames} {...paperProps}>
       {children}
