@@ -21,8 +21,10 @@ const makeTiles = (
     const { columnIndex, rowIndex } = props;
     return (
       <div data-testid="tile" style={props.style}>
-        <Land terrain={map[props.columnIndex][props.rowIndex]}>
-          {TileChildren && <TileChildren location={[columnIndex, rowIndex]} />}
+        <Land terrain={map[props.rowIndex][props.columnIndex]}>
+          {TileChildren && (
+            <TileChildren location={[columnIndex, map.length - 1 - rowIndex]} />
+          )}
         </Land>
       </div>
     );
@@ -34,12 +36,12 @@ const Site = (props: SiteProps): JSX.Element => {
   const { map, TileChildren, ...otherProps } = props;
   const children = makeTiles(map, TileChildren);
   const rootProps: FixedSizeGridProps = {
-    columnCount: map.length,
-    rowCount: map[0].length,
+    columnCount: map[0].length,
+    rowCount: map.length,
     columnWidth: 64,
     rowHeight: 64,
     width: 640,
-    height: 640,
+    height: map.length > 640 ? 640 : map.length * 64,
     children,
   };
 

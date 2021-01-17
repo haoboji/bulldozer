@@ -1,3 +1,4 @@
+import { deepEqual } from "mathjs";
 import React from "react";
 import { ReactComponent as BulldozerIcon } from "../../common/assets/bulldozer.svg";
 import { Direction } from "./state/bulldozer";
@@ -13,18 +14,19 @@ export interface BulldozerProps extends React.SVGProps<SVGSVGElement> {
 }
 
 const getRotation = (f: Direction) => {
-  switch (f) {
-    case DIRECTION_EAST:
-      return 0;
-    case DIRECTION_SOUTH:
-      return 90;
-    case DIRECTION_WEST:
-      return 180;
-    case DIRECTION_NORTH:
-      return 270;
-    default:
-      return 0;
+  if (deepEqual(f, DIRECTION_EAST)) {
+    return 0;
   }
+  if (deepEqual(f, DIRECTION_SOUTH)) {
+    return 90;
+  }
+  if (deepEqual(f, DIRECTION_WEST)) {
+    return 180;
+  }
+  if (deepEqual(f, DIRECTION_NORTH)) {
+    return 270;
+  }
+  return 0;
 };
 
 const Bulldozer = (props: BulldozerProps): JSX.Element => {

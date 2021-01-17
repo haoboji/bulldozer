@@ -44,7 +44,14 @@ const game = (
 ): GameState => {
   switch (action.type) {
     case SET_SITE_MAP: {
-      return { ...state, map: action.map };
+      return {
+        ...state,
+        map: action.map,
+        bulldozer: {
+          location: [-1, action.map.length - 1],
+          direction: DIRECTION_EAST,
+        },
+      };
     }
     case ADVANCE_BULLDOZER: {
       const { activities, bulldozer, map, commands } = state;

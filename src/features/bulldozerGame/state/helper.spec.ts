@@ -34,6 +34,7 @@ test("Parse map from string", () => {
   expect(parseMap("oTo\n\n")).toEqual([["o", "T", "o"]]);
   expect(parseMap("o\nt\n")).toEqual([["o"], ["t"]]);
   expect(parseMap("r")).toEqual([["r"]]);
+  expect(() => parseMap(" \n")).toThrow();
   expect(() => parseMap("a")).toThrow();
   expect(() => parseMap("o\noo")).toThrow();
 });

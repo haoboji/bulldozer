@@ -31,8 +31,8 @@ test("place child on specific tile", () => {
   };
   const c = render(<Site map={map} TileChildren={TileChildren} />);
   expect(c.queryAllByText("hasChild").length).toBe(1);
-  expect(within(c.getByTestId("terrain-o")).queryByText("hasChild")).toBe(null);
-  expect(
-    within(c.getByTestId("terrain-r")).queryByText("hasChild")
-  ).toBeDefined();
+  const plainLand = within(c.getByTestId("terrain-o"));
+  const rock = within(c.getByTestId("terrain-r"));
+  expect(plainLand.queryByText("hasChild")).toBeDefined();
+  expect(rock.queryByText("hasChild")).toBeNull();
 });

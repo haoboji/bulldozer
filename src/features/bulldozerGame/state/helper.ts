@@ -36,10 +36,11 @@ export const parseFile = (file: File): Promise<string> =>
   });
 
 export const parseMap = (content: string): SiteMap => {
-  const rawMap = content
-    .trim()
-    .split("\n")
-    .map((row) => row.split(""));
+  const trimmed = content.trim();
+  if (trimmed.length === 0) {
+    throw Error("Empty map");
+  }
+  const rawMap = trimmed.split("\n").map((row) => row.split(""));
   const abnormalRow = rawMap.find((r) => r.length !== rawMap[0].length);
   if (abnormalRow) {
     throw Error("Invalid map shape");
