@@ -69,7 +69,7 @@ const game = (
           ]
         : activities;
       const status = isLocationValid(newLocation, state.map)
-        ? state.status
+        ? GameStatus.Started
         : GameStatus.Error;
       return {
         ...state,

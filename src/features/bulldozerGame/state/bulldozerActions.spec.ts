@@ -88,3 +88,25 @@ test("Record activities", () => {
     terrain: REMOVABLE_TREE,
   });
 });
+
+test("game status 1", () => {
+  const map: SiteMap = [[PLAIN_LAND, PRESERVED_TREE]];
+  const s = createAppStore();
+  s.dispatch(setSiteMap(map));
+  expect(s.getState().game.status).toEqual(GameStatus.Starting);
+  s.dispatch(advanceBulldozer());
+  expect(s.getState().game.status).toEqual(GameStatus.Started);
+  s.dispatch(advanceBulldozer());
+  expect(s.getState().game.status).toEqual(GameStatus.Error);
+});
+
+test("game status 2", () => {
+  const map: SiteMap = [[PLAIN_LAND]];
+  const s = createAppStore();
+  s.dispatch(setSiteMap(map));
+  expect(s.getState().game.status).toEqual(GameStatus.Starting);
+  s.dispatch(advanceBulldozer());
+  expect(s.getState().game.status).toEqual(GameStatus.Started);
+  s.dispatch(endSimuation());
+  expect(s.getState().game.status).toEqual(GameStatus.Ended);
+});
