@@ -3,8 +3,9 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styles from "./ControlContainer.styles";
 import { advanceBulldozer, rotateBulldozer } from "./state/bulldozerActions";
-import { ROTATION_LEFT, ROTATION_RIGHT } from "./state/constant";
+import { Command, ROTATION_LEFT, ROTATION_RIGHT } from "./state/constant";
 import { endSimuation } from "./state/siteActions";
+import config from "../../app/config";
 
 const GameControl = (): JSX.Element => {
   const classes = makeStyles(styles)();
@@ -21,16 +22,16 @@ const GameControl = (): JSX.Element => {
   return (
     <Paper className={classes.root} variant="outlined">
       <Button {...buttonProps} onClick={handleAdvance}>
-        Advance
+        {config.commandName[Command.Advance]}
       </Button>
       <Button {...buttonProps} onClick={handleLeft}>
-        Left
+        {config.commandName[Command.Left]}
       </Button>
       <Button {...buttonProps} onClick={handleRight}>
-        Right
+        {config.commandName[Command.Right]}
       </Button>
       <Button {...buttonProps} onClick={handleQuit}>
-        Quit
+        {config.commandName[Command.Quit]}
       </Button>
     </Paper>
   );
