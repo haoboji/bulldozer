@@ -17,7 +17,7 @@ import {
 } from "./constant";
 import { initialGameState } from "./gameReducer";
 import { SiteMap } from "./site";
-import { endSimuation } from "./siteActions";
+import { endSimuation, setSiteMap } from "./siteActions";
 
 test("Advance bulldozer", () => {
   const bulldozer: Bulldozer = { location: [1, 1], direction: [1, 0] };
@@ -66,27 +66,25 @@ test("Record commands", () => {
 
 test("Record activities", () => {
   const map: SiteMap = [
-    [PLAIN_LAND, ROCKY_LAND, REMOVABLE_TREE, PRESERVED_TREE],
+    [PLAIN_LAND, ROCKY_LAND],
+    [PRESERVED_TREE, REMOVABLE_TREE],
   ];
-  const s = createAppStore({ game: { ...initialGameState, map } });
+  const s = createAppStore();
+  s.dispatch(setSiteMap(map));
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[0]).toEqual({
-    location: [0, 0],
+    location: [0, 1],
     terrain: PLAIN_LAND,
   });
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[1]).toEqual({
-    location: [1, 0],
+    location: [1, 1],
     terrain: ROCKY_LAND,
   });
+  s.dispatch(rotateBulldozer(ROTATION_RIGHT));
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[2]).toEqual({
-    location: [2, 0],
+    location: [1, 0],
     terrain: REMOVABLE_TREE,
-  });
-  s.dispatch(advanceBulldozer());
-  expect(s.getState().game.activities[3]).toEqual({
-    location: [3, 0],
-    terrain: PRESERVED_TREE,
   });
 });

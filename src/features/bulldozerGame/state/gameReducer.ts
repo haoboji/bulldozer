@@ -58,7 +58,7 @@ const game = (
       const { location, direction } = bulldozer;
       const newLocation = add(location, direction) as Location;
       const [x, y] = newLocation;
-      const terrain = map?.[y]?.[x];
+      const terrain = map?.[map.length - y - 1]?.[x];
       const newActivities = terrain
         ? [
             ...activities,

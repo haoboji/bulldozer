@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActivityList component 1`] = `
+<div>
+  <div
+    class="MuiPaper-root makeStyles-root-1 MuiPaper-outlined MuiPaper-rounded"
+  >
+    <div
+      style="position: relative; height: 420px; width: 650px; overflow: auto; will-change: transform; direction: ltr;"
+    >
+      <div
+        style="height: 108px; width: 100%;"
+      >
+        <div
+          class="makeStyles-item-9"
+          style="position: absolute; left: 0px; top: 0px; height: 36px; width: 100%;"
+        >
+          <span
+            class="makeStyles-name-11"
+          >
+            <b>
+              Activity
+            </b>
+          </span>
+          <span
+            class="makeStyles-location-12"
+          >
+            <b>
+              Location ([x,y])
+            </b>
+          </span>
+          <span
+            class="makeStyles-fuel-13"
+          >
+            <b>
+              Fuel Usage (fuel unit)
+            </b>
+          </span>
+          <span
+            class="makeStyles-cost-14"
+          >
+            <b>
+              Cost (credit)
+            </b>
+          </span>
+        </div>
+        <div
+          class="makeStyles-item-16 makeStyles-borderTop-17"
+          style="position: absolute; left: 0px; top: 36px; height: 36px; width: 100%;"
+        >
+          <span
+            class="makeStyles-name-18"
+          >
+            Clearing plain land
+          </span>
+          <span
+            class="makeStyles-location-19"
+          >
+            [12,34]
+          </span>
+          <span
+            class="makeStyles-fuel-20"
+          >
+            1
+          </span>
+          <span
+            class="makeStyles-cost-21"
+          >
+            1
+          </span>
+        </div>
+        <div
+          class="makeStyles-item-23 makeStyles-borderTop-24"
+          style="position: absolute; left: 0px; top: 72px; height: 36px; width: 100%;"
+        >
+          <span
+            class="makeStyles-name-25"
+          >
+            Clearing land containing a tree
+          </span>
+          <span
+            class="makeStyles-location-26"
+          >
+            [56,78]
+          </span>
+          <span
+            class="makeStyles-fuel-27"
+          >
+            2
+          </span>
+          <span
+            class="makeStyles-cost-28"
+          >
+            2
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

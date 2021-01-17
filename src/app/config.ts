@@ -30,6 +30,7 @@ export default {
     [CLEARED_LAND]: "Visiting cleared land",
     [ROCKY_LAND]: "Clearing rocky land",
     [REMOVABLE_TREE]: "Clearing land containing a tree",
+    [PRESERVED_TREE]: "Attempting to remove protected tree",
   },
   commandName: {
     [Command.Advance]: "Advance",
