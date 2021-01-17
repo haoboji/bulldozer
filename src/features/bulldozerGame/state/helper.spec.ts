@@ -1,10 +1,11 @@
 import {
+  CLEARED_LAND,
   PLAIN_LAND,
   PRESERVED_TREE,
   REMOVABLE_TREE,
   ROCKY_LAND,
 } from "./constant";
-import { isLocationValid, parseFile, parseMap } from "./helper";
+import { isLocationValid, parseFile, parseMap, updateMapTile } from "./helper";
 import { SiteMap } from "./site";
 import { Location } from "./bulldozer";
 
@@ -37,4 +38,16 @@ test("Parse map from string", () => {
   expect(() => parseMap(" \n")).toThrow();
   expect(() => parseMap("a")).toThrow();
   expect(() => parseMap("o\noo")).toThrow();
+});
+
+test("Update map tile", () => {
+  const map: SiteMap = [
+    [PLAIN_LAND, ROCKY_LAND],
+    [REMOVABLE_TREE, PRESERVED_TREE],
+  ];
+  const newMap = updateMapTile(map, CLEARED_LAND, 1, 0);
+  expect(newMap).toEqual([
+    [PLAIN_LAND, ROCKY_LAND],
+    [CLEARED_LAND, PRESERVED_TREE],
+  ]);
 });

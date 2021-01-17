@@ -2,6 +2,7 @@ import { createAppStore } from "../../../app/store";
 import { Bulldozer } from "./bulldozer";
 import { advanceBulldozer, rotateBulldozer } from "./bulldozerActions";
 import {
+  CLEARED_LAND,
   Command,
   DIRECTION_EAST,
   DIRECTION_NORTH,
@@ -21,7 +22,9 @@ import { endSimuation, setSiteMap } from "./siteActions";
 
 test("Advance bulldozer", () => {
   const bulldozer: Bulldozer = { location: [1, 1], direction: [1, 0] };
-  const s = createAppStore({ game: { ...initialGameState, bulldozer } });
+  const s = createAppStore({
+    game: { ...initialGameState, bulldozer, map: [[]] },
+  });
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.bulldozer.location).toEqual([2, 1]);
 });
@@ -54,6 +57,7 @@ test("Invalid bulldozer move", () => {
 
 test("Record commands", () => {
   const s = createAppStore();
+  s.dispatch(setSiteMap([[]]));
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.commands[0]).toEqual(Command.Advance);
   s.dispatch(rotateBulldozer(ROTATION_LEFT));
@@ -109,4 +113,12 @@ test("game status 2", () => {
   expect(s.getState().game.status).toEqual(GameStatus.Started);
   s.dispatch(endSimuation());
   expect(s.getState().game.status).toEqual(GameStatus.Ended);
+});
+
+test("Mark land as cleared upon visiting", () => {
+  const map: SiteMap = [[PLAIN_LAND]];
+  const s = createAppStore();
+  s.dispatch(setSiteMap(map));
+  s.dispatch(advanceBulldozer());
+  expect(s.getState().game.map).toEqual([[CLEARED_LAND]]);
 });

@@ -7,14 +7,15 @@ import {
 } from "./actionTypes";
 import { Bulldozer, Location } from "./bulldozer";
 import {
+  CLEARED_LAND,
   Command,
   DIRECTION_EAST,
   GameStatus,
   ROTATION_RIGHT,
 } from "./constant";
-import { SiteMap } from "./site";
+import { SiteMap, Terrain } from "./site";
 import { add, multiply } from "mathjs";
-import { isLocationValid } from "./helper";
+import { isLocationValid, updateMapTile } from "./helper";
 import { Activity } from "./report";
 
 export interface GameState {
@@ -55,27 +56,39 @@ const game = (
     }
     case ADVANCE_BULLDOZER: {
       const { activities, bulldozer, map, commands } = state;
+      if (!map) {
+        return state;
+      }
       const { location, direction } = bulldozer;
       const newLocation = add(location, direction) as Location;
       const [x, y] = newLocation;
-      const terrain = map?.[map.length - y - 1]?.[x];
-      const newActivities = terrain
-        ? [
-            ...activities,
-            {
-              terrain,
-              location: newLocation,
-            },
-          ]
+      const rowIndex = map.length - y - 1;
+      const terrain: Terrain | undefined = map[rowIndex]?.[x];
+      const isValidMove = isLocationValid(newLocation, state.map);
+      const newStatus = isValidMove ? GameStatus.Started : GameStatus.Error;
+      // Mark target tile to cleared
+      const newMap =
+        isValidMove && terrain !== CLEARED_LAND
+          ? updateMapTile(map, CLEARED_LAND, rowIndex, x)
+          : map;
+      // Log commands
+      const newCommands = [...commands, Command.Advance];
+      // Log activity
+      const newActivity = isValidMove &&
+        !!terrain && {
+          terrain,
+          location: newLocation,
+        };
+      const newActivities = newActivity
+        ? [...activities, newActivity]
         : activities;
-      const status = isLocationValid(newLocation, state.map)
-        ? GameStatus.Started
-        : GameStatus.Error;
+
       return {
         ...state,
-        status,
+        status: newStatus,
+        map: newMap,
         activities: newActivities,
-        commands: [...commands, Command.Advance],
+        commands: newCommands,
         bulldozer: { ...bulldozer, location: newLocation },
       };
     }

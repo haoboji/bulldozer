@@ -5,7 +5,7 @@ import {
   REMOVABLE_TREE,
   ROCKY_LAND,
 } from "./constant";
-import { SiteMap } from "./site";
+import { SiteMap, Terrain } from "./site";
 
 export const isLocationValid = (
   location: Location,
@@ -21,6 +21,21 @@ export const isLocationValid = (
     return false;
   }
   return true;
+};
+
+export const updateMapTile = (
+  map: SiteMap,
+  terrain: Terrain,
+  rowIndex: number,
+  colIndex: number
+): SiteMap => {
+  const row = map[rowIndex];
+  const newRow = [
+    ...row.slice(0, colIndex),
+    terrain,
+    ...row.slice(colIndex + 1),
+  ];
+  return [...map.slice(0, rowIndex), newRow, ...map.slice(rowIndex + 1)];
 };
 
 export const parseFile = (file: File): Promise<string> =>
