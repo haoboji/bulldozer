@@ -122,3 +122,13 @@ test("Mark land as cleared upon visiting", () => {
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.map).toEqual([[CLEARED_LAND]]);
 });
+
+test("total cost from activities", () => {
+  const map: SiteMap = [[PLAIN_LAND, ROCKY_LAND]];
+  const s = createAppStore();
+  s.dispatch(setSiteMap(map));
+  s.dispatch(advanceBulldozer());
+  expect(s.getState().game.totalCost).toEqual(1);
+  s.dispatch(advanceBulldozer());
+  expect(s.getState().game.totalCost).toEqual(3);
+});
