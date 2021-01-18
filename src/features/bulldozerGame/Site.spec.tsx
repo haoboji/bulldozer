@@ -21,10 +21,10 @@ test("site tiles count", () => {
 test("place child on specific tile", () => {
   const map: SiteMap = [
     [PLAIN_LAND, ROCKY_LAND],
-    [REMOVABLE_TREE, PRESERVED_TREE],
+    [PRESERVED_TREE, REMOVABLE_TREE],
   ];
   const TileChildren: SiteProps["TileChildren"] = ({ location: [x, y] }) => {
-    if (x === 0 && y === 1) {
+    if (x === 1 && y === -1) {
       return <div>hasChild</div>;
     }
     return <></>;
@@ -32,7 +32,7 @@ test("place child on specific tile", () => {
   const c = render(<Site map={map} TileChildren={TileChildren} />);
   expect(c.queryAllByText("hasChild").length).toBe(1);
   const plainLand = within(c.getByTestId("terrain-o"));
-  const rock = within(c.getByTestId("terrain-r"));
-  expect(plainLand.queryByText("hasChild")).toBeDefined();
-  expect(rock.queryByText("hasChild")).toBeNull();
+  const tree = within(c.getByTestId("terrain-t"));
+  expect(tree.queryByText("hasChild")).toBeDefined();
+  expect(plainLand.queryByText("hasChild")).toBeNull();
 });

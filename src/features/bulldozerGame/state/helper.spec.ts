@@ -16,7 +16,7 @@ test("Validate bulldozer location", () => {
   ];
   const safe: Location = [0, 0];
   const beyondBoundary: Location = [1, 2];
-  const atPreservedTree: Location = [1, 0];
+  const atPreservedTree: Location = [1, -1];
   expect(isLocationValid(safe, null)).toBe(false);
   expect(isLocationValid(safe, map)).toBe(true);
   expect(isLocationValid(beyondBoundary, map)).toBe(false);

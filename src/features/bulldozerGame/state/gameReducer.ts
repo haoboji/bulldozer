@@ -49,14 +49,7 @@ const game = (
 ): GameState => {
   switch (action.type) {
     case SET_SITE_MAP: {
-      return {
-        ...state,
-        map: action.map,
-        bulldozer: {
-          location: [-1, action.map.length - 1],
-          direction: DIRECTION_EAST,
-        },
-      };
+      return { ...state, map: action.map };
     }
     case ADVANCE_BULLDOZER: {
       const { activities, bulldozer, map, commands, totalCost } = state;
@@ -66,14 +59,13 @@ const game = (
       const { location, direction } = bulldozer;
       const newLocation = add(location, direction) as Location;
       const [x, y] = newLocation;
-      const rowIndex = map.length - y - 1;
-      const terrain: Terrain | undefined = map[rowIndex]?.[x];
+      const terrain: Terrain | undefined = map[-y]?.[x];
       const isValidMove = isLocationValid(newLocation, state.map);
       const newStatus = isValidMove ? GameStatus.Started : GameStatus.Error;
       // Mark target tile to cleared
       const newMap =
         isValidMove && terrain !== CLEARED_LAND
-          ? updateMapTile(map, CLEARED_LAND, rowIndex, x)
+          ? updateMapTile(map, CLEARED_LAND, -y, x)
           : map;
       // Log commands
       const newCommands = [...commands, Command.Advance];

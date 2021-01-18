@@ -77,18 +77,18 @@ test("Record activities", () => {
   s.dispatch(setSiteMap(map));
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[0]).toEqual({
-    location: [0, 1],
+    location: [0, 0],
     terrain: PLAIN_LAND,
   });
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[1]).toEqual({
-    location: [1, 1],
+    location: [1, 0],
     terrain: ROCKY_LAND,
   });
   s.dispatch(rotateBulldozer(ROTATION_RIGHT));
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[2]).toEqual({
-    location: [1, 0],
+    location: [1, -1],
     terrain: REMOVABLE_TREE,
   });
 });

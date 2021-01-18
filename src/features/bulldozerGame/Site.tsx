@@ -22,9 +22,7 @@ const makeTiles = (
     return (
       <div data-testid="tile" style={props.style}>
         <Land terrain={map[props.rowIndex][props.columnIndex]}>
-          {TileChildren && (
-            <TileChildren location={[columnIndex, map.length - 1 - rowIndex]} />
-          )}
+          {TileChildren && <TileChildren location={[columnIndex, -rowIndex]} />}
         </Land>
       </div>
     );

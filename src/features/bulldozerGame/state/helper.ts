@@ -13,11 +13,11 @@ export const isLocationValid = (
 ): boolean => {
   const [x, y] = location;
   // Validate boundaries
-  if (map?.[map.length - y - 1]?.[x] === undefined) {
+  if (map?.[-y]?.[x] === undefined) {
     return false;
   }
   // Validate protected tree
-  if (map[map.length - y - 1][x] === PRESERVED_TREE) {
+  if (map[-y][x] === PRESERVED_TREE) {
     return false;
   }
   return true;
