@@ -1,12 +1,12 @@
 import { fireEvent, render } from "@testing-library/react";
 import React from "react";
-import WelcomePage from "./WelcomePage";
+import UploadMap from "./UploadMap";
 
 test("WelcomePage functionality", () => {
   const uploadMap = jest.fn();
   const useDefault = jest.fn();
   const c = render(
-    <WelcomePage onClickDefaultMap={useDefault} onChangeUploadMap={uploadMap} />
+    <UploadMap onClickDefaultMap={useDefault} onChangeUploadMap={uploadMap} />
   );
   c.getByText(/Use default map/i).click();
   expect(useDefault).toBeCalledTimes(1);

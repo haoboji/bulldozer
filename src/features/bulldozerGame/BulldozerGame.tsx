@@ -11,7 +11,7 @@ import GameControl from "./ControlContainer";
 import MapLegend from "./MapLegend";
 import Site, { SiteProps } from "./Site";
 import { uploadSiteMap } from "./state/siteActions";
-import WelcomePage from "./WelcomePage";
+import UploadMap from "./UploadMap";
 
 const BulldozerGame = (): JSX.Element => {
   const classes = makeStyles(styles)();
@@ -39,7 +39,7 @@ const BulldozerGame = (): JSX.Element => {
   return (
     <div className={classes.root}>
       {!map && (
-        <WelcomePage
+        <UploadMap
           className={classes.welcomePage}
           onChangeUploadMap={handleUpload}
         />

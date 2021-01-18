@@ -1,9 +1,9 @@
 import { Button, ButtonProps, makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
-import styles from "./WelcomePage.styles";
+import styles from "./UploadMap.styles";
 
-export interface WelcomePageProps
+export interface UploadMapProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
@@ -12,7 +12,7 @@ export interface WelcomePageProps
   onChangeUploadMap?: (fileList: FileList | null) => void;
 }
 
-const WelcomePage = (props: WelcomePageProps): JSX.Element => {
+const UploadMap = (props: UploadMapProps): JSX.Element => {
   const {
     className,
     onClickDefaultMap,
@@ -59,4 +59,4 @@ const WelcomePage = (props: WelcomePageProps): JSX.Element => {
   );
 };
 
-export default WelcomePage;
+export default UploadMap;
