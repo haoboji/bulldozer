@@ -13,7 +13,7 @@ import {
 import clsx from "clsx";
 
 export interface LandProps extends PaperProps {
-  terrain: Terrain;
+  terrain?: Terrain;
 }
 
 const Land = (props: LandProps): JSX.Element => {
@@ -26,12 +26,14 @@ const Land = (props: LandProps): JSX.Element => {
     terrain === ROCKY_LAND && classes.lightsteelblue,
     terrain === PLAIN_LAND && classes.lightgoldenrodyellow,
     terrain === CLEARED_LAND && classes.white,
+    terrain === undefined && classes.invisible,
     className
   );
 
   return (
     <Paper
-      data-testid={`terrain-${terrain}`}
+      role="img"
+      aria-label={terrain}
       variant="outlined"
       className={classNames}
       {...paperProps}

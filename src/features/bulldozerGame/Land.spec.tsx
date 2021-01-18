@@ -24,5 +24,9 @@ test("Land styles", () => {
       <Land terrain={CLEARED_LAND} />
     </>
   );
-  expect(c.container).toMatchSnapshot();
+  expect(c.getByLabelText(PRESERVED_TREE)).toBeInTheDocument();
+  expect(c.getByLabelText(REMOVABLE_TREE)).toBeInTheDocument();
+  expect(c.getByLabelText(ROCKY_LAND)).toBeInTheDocument();
+  expect(c.getByLabelText(PLAIN_LAND)).toBeInTheDocument();
+  expect(c.getByLabelText(CLEARED_LAND)).toBeInTheDocument();
 });

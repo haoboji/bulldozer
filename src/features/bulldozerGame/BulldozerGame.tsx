@@ -1,4 +1,4 @@
-import { makeStyles, Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { deepEqual } from "mathjs";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,12 @@ const BulldozerGame = (): JSX.Element => {
   };
   const BulldozerRenderer: SiteProps["TileChildren"] = ({ location }) => {
     if (deepEqual(location, bulldozer.location)) {
-      return <Bulldozer facing={bulldozer.direction} />;
+      return (
+        <Bulldozer
+          facing={bulldozer.direction}
+          style={{ visibility: "visible" }}
+        />
+      );
     }
     return <></>;
   };
@@ -40,9 +45,7 @@ const BulldozerGame = (): JSX.Element => {
       {map && (
         <div className={classes.main}>
           <div className={classes.column}>
-            <Paper className={classes.map} variant="outlined">
-              <Site map={map} TileChildren={BulldozerRenderer} />
-            </Paper>
+            <Site map={map} TileChildren={BulldozerRenderer} />
             <GameControl />
           </div>
           <div>

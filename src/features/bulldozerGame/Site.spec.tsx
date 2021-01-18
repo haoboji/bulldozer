@@ -15,7 +15,7 @@ test("site tiles count", () => {
     [REMOVABLE_TREE, PRESERVED_TREE],
   ];
   const c = render(<Site map={map} />);
-  expect(c.getAllByTestId("tile").length).toBe(4);
+  expect(c.getAllByTestId("tile").length).toBe(16);
 });
 
 test("place child on specific tile", () => {
@@ -31,8 +31,10 @@ test("place child on specific tile", () => {
   };
   const c = render(<Site map={map} TileChildren={TileChildren} />);
   expect(c.queryAllByText("hasChild").length).toBe(1);
-  const plainLand = within(c.getByTestId("terrain-o"));
-  const tree = within(c.getByTestId("terrain-t"));
-  expect(tree.queryByText("hasChild")).toBeDefined();
-  expect(plainLand.queryByText("hasChild")).toBeNull();
+  expect(
+    within(c.getByLabelText(REMOVABLE_TREE)).getByText("hasChild")
+  ).toBeInTheDocument();
+  expect(
+    within(c.getByLabelText(PLAIN_LAND)).queryByText("hasChild")
+  ).toBeNull();
 });

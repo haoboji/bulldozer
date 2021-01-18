@@ -30,13 +30,13 @@ const getRotation = (f: Direction) => {
 };
 
 const Bulldozer = (props: BulldozerProps): JSX.Element => {
-  const { facing, ...svgProps } = props;
+  const { facing, style, ...svgProps } = props;
   const rotation = getRotation(facing);
 
   return (
     <BulldozerIcon
       data-testid="bulldozer-icon"
-      style={{ transform: `rotate(${rotation}deg)` }}
+      style={{ transform: `rotate(${rotation}deg)`, ...style }}
       {...svgProps}
     />
   );

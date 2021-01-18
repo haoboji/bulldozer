@@ -25,6 +25,9 @@ const styles = createStyles({
   green: {
     background: "green",
   },
+  invisible: {
+    visibility: "hidden",
+  },
 });
 
 export default styles;
