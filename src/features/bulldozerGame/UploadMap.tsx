@@ -1,4 +1,10 @@
-import { Button, ButtonProps, makeStyles, Typography } from "@material-ui/core";
+import {
+  Button,
+  ButtonProps,
+  Link,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
 import styles from "./UploadMap.styles";
@@ -8,17 +14,11 @@ export interface UploadMapProps
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {
-  onClickDefaultMap?: () => void;
   onChangeUploadMap?: (fileList: FileList | null) => void;
 }
 
 const UploadMap = (props: UploadMapProps): JSX.Element => {
-  const {
-    className,
-    onClickDefaultMap,
-    onChangeUploadMap,
-    ...otherProps
-  } = props;
+  const { className, onChangeUploadMap, ...otherProps } = props;
   const classes = makeStyles(styles)();
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     onChangeUploadMap?.(e.target.files);
@@ -46,11 +46,9 @@ const UploadMap = (props: UploadMapProps): JSX.Element => {
             Upload site map
           </Button>
         </label>
-        {onClickDefaultMap && (
-          <Button {...buttonProps} onClick={onClickDefaultMap}>
-            Use default map
-          </Button>
-        )}
+        <Link href={`${process.env.PUBLIC_URL}/siteMap.txt`} download>
+          <Button {...buttonProps}>Download default map</Button>
+        </Link>
       </div>
     </div>
   );
