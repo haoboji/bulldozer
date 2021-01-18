@@ -14,7 +14,7 @@ export interface Bulldozer {
   direction: Direction;
 }
 
-export type SiteMap = Terrain[][];
+export type Map = Terrain[][];
 
 export interface Activity {
   terrain: Terrain;

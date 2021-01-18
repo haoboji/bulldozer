@@ -1,11 +1,11 @@
 import { render, within } from "@testing-library/react";
 import React from "react";
 import Site, { SiteProps } from "./Site";
-import { SiteMap } from "./state/bulldozer";
+import { Map } from "./state/bulldozer";
 import { Terrain } from "./state/constant";
 
 test("site tiles count", () => {
-  const map: SiteMap = [
+  const map: Map = [
     [Terrain.PlainLand, Terrain.RockyLand],
     [Terrain.RemovableTree, Terrain.ProtectedTree],
   ];
@@ -14,7 +14,7 @@ test("site tiles count", () => {
 });
 
 test("place child on specific tile", () => {
-  const map: SiteMap = [
+  const map: Map = [
     [Terrain.PlainLand, Terrain.RockyLand],
     [Terrain.ProtectedTree, Terrain.RemovableTree],
   ];

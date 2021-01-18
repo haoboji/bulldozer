@@ -5,12 +5,12 @@ import {
   GridChildComponentProps,
 } from "react-window";
 import Land from "./Land";
-import { Location, SiteMap } from "./state/bulldozer";
+import { Location, Map } from "./state/bulldozer";
 import { makeStyles, Paper } from "@material-ui/core";
 import styles from "./Site.styles";
 
 export interface SiteProps extends Partial<FixedSizeGridProps> {
-  map: SiteMap;
+  map: Map;
   TileChildren?: (props: { location: Location }) => JSX.Element;
 }
 

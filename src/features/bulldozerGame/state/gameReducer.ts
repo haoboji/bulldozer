@@ -5,7 +5,7 @@ import {
   ROTATE_BULLDOZER,
   SET_SITE_MAP,
 } from "./actionTypes";
-import { Activity, Bulldozer, Location, SiteMap } from "./bulldozer";
+import { Activity, Bulldozer, Location, Map } from "./bulldozer";
 import {
   Command,
   DIRECTION_EAST,
@@ -18,7 +18,7 @@ import { isLocationValid, updateMapTile } from "./helper";
 import config from "../../../app/config";
 
 export interface GameState {
-  map: SiteMap | null;
+  map: Map | null;
   status: GameStatus;
   bulldozer: Bulldozer;
   commands: Command[];

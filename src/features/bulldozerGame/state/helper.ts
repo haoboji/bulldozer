@@ -1,9 +1,9 @@
-import { Location, SiteMap } from "./bulldozer";
+import { Location, Map } from "./bulldozer";
 import { Terrain } from "./constant";
 
 export const isLocationValid = (
   location: Location,
-  map: SiteMap | null
+  map: Map | null
 ): boolean => {
   const [x, y] = location;
   // Validate boundaries
@@ -18,11 +18,11 @@ export const isLocationValid = (
 };
 
 export const updateMapTile = (
-  map: SiteMap,
+  map: Map,
   terrain: Terrain,
   rowIndex: number,
   colIndex: number
-): SiteMap => {
+): Map => {
   const row = map[rowIndex];
   const newRow = [
     ...row.slice(0, colIndex),
@@ -44,7 +44,7 @@ export const parseFile = (file: File): Promise<string> =>
     fileReader.readAsText(file);
   });
 
-export const parseMap = (content: string): SiteMap => {
+export const parseMap = (content: string): Map => {
   const trimmed = content.trim();
   if (trimmed.length === 0) {
     throw Error("Empty map");
@@ -67,5 +67,5 @@ export const parseMap = (content: string): SiteMap => {
   if (invalidTile) {
     throw Error("Invalid map tile");
   }
-  return rawMap as SiteMap;
+  return rawMap as Map;
 };

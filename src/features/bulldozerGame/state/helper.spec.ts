@@ -1,9 +1,9 @@
 import { Terrain } from "./constant";
 import { isLocationValid, parseFile, parseMap, updateMapTile } from "./helper";
-import { Location, SiteMap } from "./bulldozer";
+import { Location, Map } from "./bulldozer";
 
 test("Validate bulldozer location", () => {
-  const map: SiteMap = [
+  const map: Map = [
     [Terrain.PlainLand, Terrain.RockyLand],
     [Terrain.RemovableTree, Terrain.ProtectedTree],
   ];
@@ -34,7 +34,7 @@ test("Parse map from string", () => {
 });
 
 test("Update map tile", () => {
-  const map: SiteMap = [
+  const map: Map = [
     [Terrain.PlainLand, Terrain.RockyLand],
     [Terrain.RemovableTree, Terrain.ProtectedTree],
   ];

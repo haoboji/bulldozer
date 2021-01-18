@@ -1,5 +1,5 @@
 import { createAppStore } from "../../../app/store";
-import { Bulldozer, SiteMap } from "./bulldozer";
+import { Bulldozer, Map } from "./bulldozer";
 import {
   advanceBulldozer,
   endSimuation,
@@ -50,7 +50,7 @@ test("End simulation", () => {
 });
 
 test("Invalid bulldozer move", () => {
-  const map: SiteMap = [
+  const map: Map = [
     [Terrain.PlainLand, Terrain.RockyLand, Terrain.ProtectedTree],
   ];
   const bulldozer: Bulldozer = { location: [0, 0], direction: DIRECTION_EAST };
@@ -77,7 +77,7 @@ test("Record commands", () => {
 });
 
 test("Record activities", () => {
-  const map: SiteMap = [
+  const map: Map = [
     [Terrain.PlainLand, Terrain.RockyLand],
     [Terrain.ProtectedTree, Terrain.RemovableTree],
   ];
@@ -102,7 +102,7 @@ test("Record activities", () => {
 });
 
 test("game status 1", () => {
-  const map: SiteMap = [[Terrain.PlainLand, Terrain.ProtectedTree]];
+  const map: Map = [[Terrain.PlainLand, Terrain.ProtectedTree]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   expect(s.getState().game.status).toEqual(GameStatus.Starting);
@@ -113,7 +113,7 @@ test("game status 1", () => {
 });
 
 test("game status 2", () => {
-  const map: SiteMap = [[Terrain.PlainLand]];
+  const map: Map = [[Terrain.PlainLand]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   expect(s.getState().game.status).toEqual(GameStatus.Starting);
@@ -124,7 +124,7 @@ test("game status 2", () => {
 });
 
 test("Mark land as cleared upon visiting", () => {
-  const map: SiteMap = [[Terrain.PlainLand]];
+  const map: Map = [[Terrain.PlainLand]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   s.dispatch(advanceBulldozer());
@@ -132,7 +132,7 @@ test("Mark land as cleared upon visiting", () => {
 });
 
 test("total cost from activities", () => {
-  const map: SiteMap = [[Terrain.PlainLand, Terrain.RockyLand]];
+  const map: Map = [[Terrain.PlainLand, Terrain.RockyLand]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   s.dispatch(advanceBulldozer());
