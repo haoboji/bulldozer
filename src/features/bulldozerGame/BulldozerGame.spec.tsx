@@ -26,7 +26,7 @@ test("bulldozer game layout before/after uploading map", () => {
   expect(c.getByText(/advance/i)).toBeInTheDocument();
   expect(c.getByText(/activity/i)).toBeInTheDocument();
   expect(c.getByText(/command/i)).toBeInTheDocument();
-  expect(c.getByTestId("bulldozer-icon")).toBeInTheDocument();
+  expect(c.getAllByTestId("bulldozer-icon").length).toBe(2);
 });
 
 test("upload map via ui", async () => {

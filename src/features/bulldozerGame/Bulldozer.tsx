@@ -10,7 +10,7 @@ import {
 } from "./state/constant";
 
 export interface BulldozerProps extends React.SVGProps<SVGSVGElement> {
-  facing: Direction;
+  facing?: Direction;
 }
 
 const getRotation = (f: Direction) => {
@@ -30,7 +30,7 @@ const getRotation = (f: Direction) => {
 };
 
 const Bulldozer = (props: BulldozerProps): JSX.Element => {
-  const { facing, style, ...svgProps } = props;
+  const { facing = DIRECTION_EAST, style, ...svgProps } = props;
   const rotation = getRotation(facing);
 
   return (

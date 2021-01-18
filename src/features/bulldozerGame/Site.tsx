@@ -49,6 +49,9 @@ const Site = (props: SiteProps): JSX.Element => {
 
   return (
     <Paper variant="outlined" className={classes.root}>
+      <div className={classes.header}>
+        <b>Site Map</b>
+      </div>
       <FixedSizeGrid {...rootProps} {...otherProps} />
     </Paper>
   );

@@ -8,6 +8,7 @@ import Bulldozer from "./Bulldozer";
 import styles from "./BulldozerGame.styles";
 import CommandList from "./CommandList";
 import GameControl from "./ControlContainer";
+import MapLegend from "./MapLegend";
 import Site, { SiteProps } from "./Site";
 import { uploadSiteMap } from "./state/siteActions";
 import WelcomePage from "./WelcomePage";
@@ -44,6 +45,9 @@ const BulldozerGame = (): JSX.Element => {
       )}
       {map && (
         <div className={classes.main}>
+          <div>
+            <MapLegend />
+          </div>
           <div className={classes.column}>
             <Site map={map} TileChildren={BulldozerRenderer} />
             <GameControl />
