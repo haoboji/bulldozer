@@ -1,6 +1,6 @@
 import { makeStyles, Paper } from "@material-ui/core";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import config from "../../app/config";
 import styles from "./ActivityList.styles";
@@ -82,11 +82,17 @@ const makeItems = (activities: ActivityListProps["activities"]) => {
 const ActivityList = (props: ActivityListProps): JSX.Element => {
   const { activities, unclearedCost, totalCost } = props;
   const classes = makeStyles(styles)();
+  const last = activities.length - 1;
+  const listRef = useRef<null | FixedSizeList>(null);
+  useEffect(() => {
+    listRef?.current?.scrollToItem(last);
+  }, [listRef, last]);
 
   return (
     <Paper variant="outlined" className={classes.root}>
       <ActivityHeader />
       <FixedSizeList
+        ref={listRef}
         itemSize={36}
         width={650}
         height={420}

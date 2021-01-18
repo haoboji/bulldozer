@@ -1,6 +1,6 @@
 import { makeStyles, Paper } from "@material-ui/core";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import config from "../../app/config";
 import styles from "./CommandList.styles";
@@ -27,7 +27,12 @@ const makeItems = (commands: CommandListProps["commands"]) => {
 
 const CommandList = (props: CommandListProps): JSX.Element => {
   const { commands } = props;
+  const last = commands.length - 1;
   const classes = makeStyles(styles)();
+  const listRef = useRef<null | FixedSizeList>(null);
+  useEffect(() => {
+    listRef?.current?.scrollToItem(last);
+  }, [listRef, last]);
 
   return (
     <Paper variant="outlined" className={classes.root}>
@@ -35,6 +40,7 @@ const CommandList = (props: CommandListProps): JSX.Element => {
         <b>Command List</b>
       </div>
       <FixedSizeList
+        ref={listRef}
         itemSize={36}
         width={150}
         height={460}
