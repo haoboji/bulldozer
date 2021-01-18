@@ -9,9 +9,6 @@ const styles = createStyles({
     flexDirection: "column",
     padding: 8,
   },
-  welcomePage: {
-    flexGrow: 0.5,
-  },
   main: {
     display: "flex",
     flexDirection: "row",
@@ -27,10 +24,15 @@ const styles = createStyles({
   },
   title: {
     margin: 16,
+    flexShrink: 0,
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
     transition: "all 1s",
+  },
+  description: {
+    transition: "all 1s",
+    overflow: "hidden",
   },
 });
 

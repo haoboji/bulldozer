@@ -1,4 +1,4 @@
-import { Collapse, makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import { deepEqual } from "mathjs";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,21 +44,22 @@ const BulldozerGame = (): JSX.Element => {
         <Typography variant="h4" align="center">
           {gameOver ? "Game Over !!!" : "Site Clearing Simulation"}
         </Typography>
-        <Collapse in={gameOver}>
-          <div>
-            <Typography variant="h6" align="center">
-              The simulation has ended and new bulldozer commands are no longer
-              accepted.
-            </Typography>
-            <Typography variant="h6" align="center">
-              Please review the final list of commands and itemised report
-              including the cost of uncleared squares.
-            </Typography>
-            <Typography variant="h6" align="center">
-              To start a new simulation session, please refresh this page.
-            </Typography>
-          </div>
-        </Collapse>
+        <div
+          className={classes.description}
+          style={{ maxHeight: gameOver ? 100 : 0 }}
+        >
+          <Typography variant="h6" align="center">
+            The simulation has ended and new bulldozer commands are no longer
+            accepted.
+          </Typography>
+          <Typography variant="h6" align="center">
+            Please review the final list of commands and itemised report
+            including the cost of uncleared squares.
+          </Typography>
+          <Typography variant="h6" align="center">
+            To start a new simulation session, please refresh this page.
+          </Typography>
+        </div>
       </div>
       {!map && <UploadMap onChangeUploadMap={handleUpload} />}
       {map && (
