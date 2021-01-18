@@ -1,4 +1,5 @@
 {
+  "homepage": "https://haoboji.github.io/bulldozer",
   "name": "bulldozer",
   "version": "0.1.0",
   "private": true,
@@ -29,7 +30,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext 'ts,tsx,json' src",
-    "lint-fix": "eslint --fix --ext 'ts,tsx,json' src"
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -60,6 +62,7 @@
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
+    "gh-pages": "^3.1.0",
     "prettier": "^2.2.1",
     "redux-mock-store": "^1.5.4"
   }
