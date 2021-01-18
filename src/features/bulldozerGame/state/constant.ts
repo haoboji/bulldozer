@@ -1,11 +1,5 @@
 import { Direction, Rotation } from "./bulldozer";
 
-export const PLAIN_LAND = "o";
-export const ROCKY_LAND = "r";
-export const REMOVABLE_TREE = "t";
-export const PRESERVED_TREE = "T";
-export const CLEARED_LAND = "c";
-
 export const DIRECTION_NORTH: Direction = [0, 1];
 export const DIRECTION_SOUTH: Direction = [0, -1];
 export const DIRECTION_EAST: Direction = [1, 0];
@@ -21,6 +15,14 @@ export const ROTATION_RIGHT: Rotation = [
   [0, -1],
   [1, 0],
 ];
+
+export enum Terrain {
+  PlainLand = "o",
+  RockyLand = "r",
+  RemovableTree = "t",
+  ProtectedTree = "T",
+  ClearedLand = "c",
+}
 
 export enum GameStatus {
   Starting,

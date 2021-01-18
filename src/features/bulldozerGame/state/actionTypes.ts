@@ -1,5 +1,4 @@
-import { Rotation } from "./bulldozer";
-import { SiteMap } from "./site";
+import { Rotation, SiteMap } from "./bulldozer";
 
 export const SET_SITE_MAP = "SET_SITE_MAP";
 export const ADVANCE_BULLDOZER = "ADVANCE_BULLDOZER";

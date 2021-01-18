@@ -1,12 +1,11 @@
-import { fireEvent, render, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { createAppStore } from "../../app/store";
 import { setSiteMap } from "./state/siteActions";
-import { CLEARED_LAND, PLAIN_LAND } from "./state/constant";
+import { Terrain } from "./state/constant";
 import BulldozerGame from "./BulldozerGame";
-import { advanceBulldozer } from "./state/bulldozerActions";
 import { SET_SITE_MAP } from "./state/actionTypes";
 import { initialGameState } from "./state/gameReducer";
 
@@ -21,25 +20,13 @@ test("bulldozer game layout before/after uploading map", () => {
   expect(c.queryByText(/advance/i)).toBeNull();
   expect(c.queryByText(/activity/i)).toBeNull();
   expect(c.queryByText(/command/i)).toBeNull();
-  s.dispatch(setSiteMap([[PLAIN_LAND]]));
+  expect(c.queryByTestId("bulldozer-icon")).toBeNull();
+  s.dispatch(setSiteMap([[Terrain.PlainLand]]));
   expect(c.queryByText(/Upload site map/i)).toBeNull();
   expect(c.getByText(/advance/i)).toBeInTheDocument();
   expect(c.getByText(/activity/i)).toBeInTheDocument();
   expect(c.getByText(/command/i)).toBeInTheDocument();
-});
-
-test("bulldozer on map", () => {
-  const s = createAppStore();
-  const c = render(
-    <Provider store={s}>
-      <BulldozerGame />
-    </Provider>
-  );
-  s.dispatch(setSiteMap([[CLEARED_LAND]]));
-  s.dispatch(advanceBulldozer());
-  expect(
-    within(c.getByLabelText(CLEARED_LAND)).getByTestId("bulldozer-icon")
-  ).toBeInTheDocument();
+  expect(c.getByTestId("bulldozer-icon")).toBeInTheDocument();
 });
 
 test("upload map via ui", async () => {

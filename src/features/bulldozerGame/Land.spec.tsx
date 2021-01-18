@@ -1,32 +1,26 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import Land from "./Land";
-import {
-  CLEARED_LAND,
-  PLAIN_LAND,
-  PRESERVED_TREE,
-  REMOVABLE_TREE,
-  ROCKY_LAND,
-} from "./state/constant";
+import { Terrain } from "./state/constant";
 
 test("Land component child", () => {
-  const c = render(<Land terrain={PRESERVED_TREE}>aChild</Land>);
+  const c = render(<Land terrain={Terrain.ProtectedTree}>aChild</Land>);
   expect(c.getByText("aChild")).toBeInTheDocument();
 });
 
 test("Land styles", () => {
   const c = render(
     <>
-      <Land terrain={PRESERVED_TREE} />
-      <Land terrain={REMOVABLE_TREE} />
-      <Land terrain={ROCKY_LAND} />
-      <Land terrain={PLAIN_LAND} />
-      <Land terrain={CLEARED_LAND} />
+      <Land terrain={Terrain.ProtectedTree} />
+      <Land terrain={Terrain.RemovableTree} />
+      <Land terrain={Terrain.RockyLand} />
+      <Land terrain={Terrain.PlainLand} />
+      <Land terrain={Terrain.ClearedLand} />
     </>
   );
-  expect(c.getByLabelText(PRESERVED_TREE)).toBeInTheDocument();
-  expect(c.getByLabelText(REMOVABLE_TREE)).toBeInTheDocument();
-  expect(c.getByLabelText(ROCKY_LAND)).toBeInTheDocument();
-  expect(c.getByLabelText(PLAIN_LAND)).toBeInTheDocument();
-  expect(c.getByLabelText(CLEARED_LAND)).toBeInTheDocument();
+  expect(c.getByLabelText(Terrain.ProtectedTree)).toBeInTheDocument();
+  expect(c.getByLabelText(Terrain.RemovableTree)).toBeInTheDocument();
+  expect(c.getByLabelText(Terrain.RockyLand)).toBeInTheDocument();
+  expect(c.getByLabelText(Terrain.PlainLand)).toBeInTheDocument();
+  expect(c.getByLabelText(Terrain.ClearedLand)).toBeInTheDocument();
 });

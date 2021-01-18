@@ -1,7 +1,7 @@
-import { SiteMap } from "./site";
 import { SetSiteMapAction, SET_SITE_MAP } from "./actionTypes";
 import { parseFile, parseMap } from "./helper";
 import { Dispatch } from "redux";
+import { SiteMap } from "./bulldozer";
 
 export const setSiteMap = (map: SiteMap): SetSiteMapAction => ({
   type: SET_SITE_MAP,

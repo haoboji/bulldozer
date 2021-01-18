@@ -1,36 +1,29 @@
-import {
-  CLEARED_LAND,
-  Command,
-  PLAIN_LAND,
-  PRESERVED_TREE,
-  REMOVABLE_TREE,
-  ROCKY_LAND,
-} from "../features/bulldozerGame/state/constant";
+import { Terrain, Command } from "../features/bulldozerGame/state/constant";
 
 export default {
   fuelUsage: {
-    [PLAIN_LAND]: 1,
-    [CLEARED_LAND]: 1,
-    [ROCKY_LAND]: 2,
-    [REMOVABLE_TREE]: 2,
+    [Terrain.PlainLand]: 1,
+    [Terrain.ClearedLand]: 1,
+    [Terrain.RockyLand]: 2,
+    [Terrain.RemovableTree]: 2,
   },
   itemCost: {
     fuel: 1,
     uncleard: 3,
   },
   terrainName: {
-    [PLAIN_LAND]: "Plain Land",
-    [CLEARED_LAND]: "Cleared Land",
-    [ROCKY_LAND]: "Rocky Land",
-    [REMOVABLE_TREE]: "Removable Tree",
-    [PRESERVED_TREE]: "Preserved Tree",
+    [Terrain.PlainLand]: "Plain Land",
+    [Terrain.ClearedLand]: "Cleared Land",
+    [Terrain.RockyLand]: "Rocky Land",
+    [Terrain.RemovableTree]: "Removable Tree",
+    [Terrain.ProtectedTree]: "Preserved Tree",
   },
   activityName: {
-    [PLAIN_LAND]: "Clearing plain land",
-    [CLEARED_LAND]: "Visiting cleared land",
-    [ROCKY_LAND]: "Clearing rocky land",
-    [REMOVABLE_TREE]: "Clearing land containing a tree",
-    [PRESERVED_TREE]: "Attempting to remove protected tree",
+    [Terrain.PlainLand]: "Clearing plain land",
+    [Terrain.ClearedLand]: "Visiting cleared land",
+    [Terrain.RockyLand]: "Clearing rocky land",
+    [Terrain.RemovableTree]: "Clearing land containing a tree",
+    [Terrain.ProtectedTree]: "Attempting to remove protected tree",
   },
   commandName: {
     [Command.Advance]: "Advance",

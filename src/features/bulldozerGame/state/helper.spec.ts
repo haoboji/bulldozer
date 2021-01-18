@@ -1,18 +1,11 @@
-import {
-  CLEARED_LAND,
-  PLAIN_LAND,
-  PRESERVED_TREE,
-  REMOVABLE_TREE,
-  ROCKY_LAND,
-} from "./constant";
+import { Terrain } from "./constant";
 import { isLocationValid, parseFile, parseMap, updateMapTile } from "./helper";
-import { SiteMap } from "./site";
-import { Location } from "./bulldozer";
+import { Location, SiteMap } from "./bulldozer";
 
 test("Validate bulldozer location", () => {
   const map: SiteMap = [
-    [PLAIN_LAND, ROCKY_LAND],
-    [REMOVABLE_TREE, PRESERVED_TREE],
+    [Terrain.PlainLand, Terrain.RockyLand],
+    [Terrain.RemovableTree, Terrain.ProtectedTree],
   ];
   const safe: Location = [0, 0];
   const beyondBoundary: Location = [1, 2];
@@ -42,12 +35,12 @@ test("Parse map from string", () => {
 
 test("Update map tile", () => {
   const map: SiteMap = [
-    [PLAIN_LAND, ROCKY_LAND],
-    [REMOVABLE_TREE, PRESERVED_TREE],
+    [Terrain.PlainLand, Terrain.RockyLand],
+    [Terrain.RemovableTree, Terrain.ProtectedTree],
   ];
-  const newMap = updateMapTile(map, CLEARED_LAND, 1, 0);
+  const newMap = updateMapTile(map, Terrain.ClearedLand, 1, 0);
   expect(newMap).toEqual([
-    [PLAIN_LAND, ROCKY_LAND],
-    [CLEARED_LAND, PRESERVED_TREE],
+    [Terrain.PlainLand, Terrain.RockyLand],
+    [Terrain.ClearedLand, Terrain.ProtectedTree],
   ]);
 });

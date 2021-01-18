@@ -1,11 +1,5 @@
-import { Location } from "./bulldozer";
-import {
-  PLAIN_LAND,
-  PRESERVED_TREE,
-  REMOVABLE_TREE,
-  ROCKY_LAND,
-} from "./constant";
-import { SiteMap, Terrain } from "./site";
+import { Location, SiteMap } from "./bulldozer";
+import { Terrain } from "./constant";
 
 export const isLocationValid = (
   location: Location,
@@ -17,7 +11,7 @@ export const isLocationValid = (
     return false;
   }
   // Validate protected tree
-  if (map[-y][x] === PRESERVED_TREE) {
+  if (map[-y][x] === Terrain.ProtectedTree) {
     return false;
   }
   return true;
@@ -64,10 +58,10 @@ export const parseMap = (content: string): SiteMap => {
     (row) =>
       !!row.find(
         (t) =>
-          t !== PRESERVED_TREE &&
-          t !== REMOVABLE_TREE &&
-          t !== ROCKY_LAND &&
-          t !== PLAIN_LAND
+          t !== Terrain.ProtectedTree &&
+          t !== Terrain.RemovableTree &&
+          t !== Terrain.RockyLand &&
+          t !== Terrain.PlainLand
       )
   );
   if (invalidTile) {

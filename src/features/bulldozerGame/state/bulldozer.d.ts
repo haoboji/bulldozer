@@ -1,3 +1,5 @@
+import { Terrain } from "./constant";
+
 // Location: first number indicate x axis, second number indicate y axis
 export type Location = [number, number];
 
@@ -10,4 +12,11 @@ export type Rotation = [[number, number], [number, number]];
 export interface Bulldozer {
   location: Location;
   direction: Direction;
+}
+
+export type SiteMap = Terrain[][];
+
+export interface Activity {
+  terrain: Terrain;
+  location: Location;
 }

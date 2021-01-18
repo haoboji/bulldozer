@@ -1,12 +1,11 @@
 import React from "react";
-import { SiteMap } from "./state/site";
 import {
   FixedSizeGrid,
   FixedSizeGridProps,
   GridChildComponentProps,
 } from "react-window";
 import Land from "./Land";
-import { Location } from "./state/bulldozer";
+import { Location, SiteMap } from "./state/bulldozer";
 import { makeStyles, Paper } from "@material-ui/core";
 import styles from "./Site.styles";
 

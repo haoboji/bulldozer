@@ -5,8 +5,8 @@ import React from "react";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import config from "../../app/config";
 import styles from "./ActivityList.styles";
-import { PRESERVED_TREE } from "./state/constant";
-import { Activity } from "./state/report";
+import { Activity } from "./state/bulldozer";
+import { Terrain } from "./state/constant";
 
 export interface ActivityListProps {
   activities: Activity[];
@@ -48,7 +48,7 @@ const TotalCostFooter = (props: ActivityListProps) => {
           {totalCost ??
             sum(
               activities.map((a) =>
-                a.terrain === PRESERVED_TREE
+                a.terrain === Terrain.ProtectedTree
                   ? 0
                   : config.fuelUsage[a.terrain] * config.itemCost.fuel
               )
@@ -65,7 +65,7 @@ const makeItems = (activities: ActivityListProps["activities"]) => {
     const classes = makeStyles(styles)();
     const { terrain, location } = activities[index];
     const { activityName, fuelUsage, itemCost } = config;
-    const fuel = terrain !== PRESERVED_TREE ? fuelUsage[terrain] : 0;
+    const fuel = terrain !== Terrain.ProtectedTree ? fuelUsage[terrain] : 0;
     const cost = itemCost.fuel * fuel;
 
     return (

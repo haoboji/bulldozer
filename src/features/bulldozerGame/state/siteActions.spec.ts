@@ -1,11 +1,11 @@
 import { createAppStore } from "../../../app/store";
-import { PLAIN_LAND } from "./constant";
-import { SiteMap } from "./site";
+import { SiteMap } from "./bulldozer";
+import { Terrain } from "./constant";
 import { setSiteMap, uploadSiteMap } from "./siteActions";
 
 test("Set site map", () => {
   const s = createAppStore();
-  const map: SiteMap = Array(3).fill(Array(3).fill(PLAIN_LAND));
+  const map: SiteMap = Array(3).fill(Array(3).fill(Terrain.PlainLand));
   s.dispatch(setSiteMap(map));
   expect(s.getState().game.map).toEqual(map);
 });

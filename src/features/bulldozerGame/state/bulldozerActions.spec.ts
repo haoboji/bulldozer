@@ -1,27 +1,22 @@
 import { createAppStore } from "../../../app/store";
-import { Bulldozer } from "./bulldozer";
+import { Bulldozer, SiteMap } from "./bulldozer";
 import {
   advanceBulldozer,
   endSimuation,
   rotateBulldozer,
 } from "./bulldozerActions";
 import {
-  CLEARED_LAND,
   Command,
   DIRECTION_EAST,
   DIRECTION_NORTH,
   DIRECTION_SOUTH,
   DIRECTION_WEST,
   GameStatus,
-  PLAIN_LAND,
-  PRESERVED_TREE,
-  REMOVABLE_TREE,
-  ROCKY_LAND,
   ROTATION_LEFT,
   ROTATION_RIGHT,
+  Terrain,
 } from "./constant";
 import { initialGameState } from "./gameReducer";
-import { SiteMap } from "./site";
 import { setSiteMap } from "./siteActions";
 
 test("Advance bulldozer", () => {
@@ -55,7 +50,9 @@ test("End simulation", () => {
 });
 
 test("Invalid bulldozer move", () => {
-  const map: SiteMap = [[PLAIN_LAND, ROCKY_LAND, PRESERVED_TREE]];
+  const map: SiteMap = [
+    [Terrain.PlainLand, Terrain.RockyLand, Terrain.ProtectedTree],
+  ];
   const bulldozer: Bulldozer = { location: [0, 0], direction: DIRECTION_EAST };
   const s = createAppStore({
     game: { ...initialGameState, bulldozer, map, status: GameStatus.Started },
@@ -81,31 +78,31 @@ test("Record commands", () => {
 
 test("Record activities", () => {
   const map: SiteMap = [
-    [PLAIN_LAND, ROCKY_LAND],
-    [PRESERVED_TREE, REMOVABLE_TREE],
+    [Terrain.PlainLand, Terrain.RockyLand],
+    [Terrain.ProtectedTree, Terrain.RemovableTree],
   ];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[0]).toEqual({
     location: [0, 0],
-    terrain: PLAIN_LAND,
+    terrain: Terrain.PlainLand,
   });
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[1]).toEqual({
     location: [1, 0],
-    terrain: ROCKY_LAND,
+    terrain: Terrain.RockyLand,
   });
   s.dispatch(rotateBulldozer(ROTATION_RIGHT));
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.activities[2]).toEqual({
     location: [1, -1],
-    terrain: REMOVABLE_TREE,
+    terrain: Terrain.RemovableTree,
   });
 });
 
 test("game status 1", () => {
-  const map: SiteMap = [[PLAIN_LAND, PRESERVED_TREE]];
+  const map: SiteMap = [[Terrain.PlainLand, Terrain.ProtectedTree]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   expect(s.getState().game.status).toEqual(GameStatus.Starting);
@@ -116,7 +113,7 @@ test("game status 1", () => {
 });
 
 test("game status 2", () => {
-  const map: SiteMap = [[PLAIN_LAND]];
+  const map: SiteMap = [[Terrain.PlainLand]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   expect(s.getState().game.status).toEqual(GameStatus.Starting);
@@ -127,15 +124,15 @@ test("game status 2", () => {
 });
 
 test("Mark land as cleared upon visiting", () => {
-  const map: SiteMap = [[PLAIN_LAND]];
+  const map: SiteMap = [[Terrain.PlainLand]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   s.dispatch(advanceBulldozer());
-  expect(s.getState().game.map).toEqual([[CLEARED_LAND]]);
+  expect(s.getState().game.map).toEqual([[Terrain.ClearedLand]]);
 });
 
 test("total cost from activities", () => {
-  const map: SiteMap = [[PLAIN_LAND, ROCKY_LAND]];
+  const map: SiteMap = [[Terrain.PlainLand, Terrain.RockyLand]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
   s.dispatch(advanceBulldozer());

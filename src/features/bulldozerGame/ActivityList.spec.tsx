@@ -1,13 +1,13 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import ActivityList from "./ActivityList";
-import { PLAIN_LAND, REMOVABLE_TREE } from "./state/constant";
-import { Activity } from "./state/report";
+import { Activity } from "./state/bulldozer";
+import { Terrain } from "./state/constant";
 
 test("ActivityList component", () => {
   const activities: Activity[] = [
-    { terrain: PLAIN_LAND, location: [12, 34] },
-    { terrain: REMOVABLE_TREE, location: [56, 78] },
+    { terrain: Terrain.PlainLand, location: [12, 34] },
+    { terrain: Terrain.RemovableTree, location: [56, 78] },
   ];
   const c = render(<ActivityList activities={activities} totalCost={999} />);
   expect(c.getByText(/Clearing plain land/i)).toBeInTheDocument();

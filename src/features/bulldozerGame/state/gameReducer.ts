@@ -5,19 +5,16 @@ import {
   ROTATE_BULLDOZER,
   SET_SITE_MAP,
 } from "./actionTypes";
-import { Bulldozer, Location } from "./bulldozer";
+import { Activity, Bulldozer, Location, SiteMap } from "./bulldozer";
 import {
-  CLEARED_LAND,
   Command,
   DIRECTION_EAST,
   GameStatus,
-  PRESERVED_TREE,
   ROTATION_RIGHT,
+  Terrain,
 } from "./constant";
-import { SiteMap, Terrain } from "./site";
 import { add, multiply } from "mathjs";
 import { isLocationValid, updateMapTile } from "./helper";
-import { Activity } from "./report";
 import config from "../../../app/config";
 
 export interface GameState {
@@ -64,15 +61,15 @@ const game = (
       const newStatus = isValidMove ? GameStatus.Started : GameStatus.Error;
       // Mark target tile to cleared
       const newMap =
-        isValidMove && terrain !== CLEARED_LAND
-          ? updateMapTile(map, CLEARED_LAND, -y, x)
+        isValidMove && terrain !== Terrain.ClearedLand
+          ? updateMapTile(map, Terrain.ClearedLand, -y, x)
           : map;
       // Log commands
       const newCommands = [...commands, Command.Advance];
       // Log activity
       const newActivity = isValidMove &&
         terrain &&
-        terrain !== PRESERVED_TREE && {
+        terrain !== Terrain.ProtectedTree && {
           terrain,
           location: newLocation,
         };

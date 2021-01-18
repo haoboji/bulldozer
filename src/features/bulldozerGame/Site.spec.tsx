@@ -1,18 +1,13 @@
 import { render, within } from "@testing-library/react";
 import React from "react";
 import Site, { SiteProps } from "./Site";
-import {
-  PLAIN_LAND,
-  ROCKY_LAND,
-  REMOVABLE_TREE,
-  PRESERVED_TREE,
-} from "./state/constant";
-import { SiteMap } from "./state/site";
+import { SiteMap } from "./state/bulldozer";
+import { Terrain } from "./state/constant";
 
 test("site tiles count", () => {
   const map: SiteMap = [
-    [PLAIN_LAND, ROCKY_LAND],
-    [REMOVABLE_TREE, PRESERVED_TREE],
+    [Terrain.PlainLand, Terrain.RockyLand],
+    [Terrain.RemovableTree, Terrain.ProtectedTree],
   ];
   const c = render(<Site map={map} />);
   expect(c.getAllByTestId("tile").length).toBe(16);
@@ -20,8 +15,8 @@ test("site tiles count", () => {
 
 test("place child on specific tile", () => {
   const map: SiteMap = [
-    [PLAIN_LAND, ROCKY_LAND],
-    [PRESERVED_TREE, REMOVABLE_TREE],
+    [Terrain.PlainLand, Terrain.RockyLand],
+    [Terrain.ProtectedTree, Terrain.RemovableTree],
   ];
   const TileChildren: SiteProps["TileChildren"] = ({ location: [x, y] }) => {
     if (x === 1 && y === -1) {
@@ -32,9 +27,9 @@ test("place child on specific tile", () => {
   const c = render(<Site map={map} TileChildren={TileChildren} />);
   expect(c.queryAllByText("hasChild").length).toBe(1);
   expect(
-    within(c.getByLabelText(REMOVABLE_TREE)).getByText("hasChild")
+    within(c.getByLabelText(Terrain.RemovableTree)).getByText("hasChild")
   ).toBeInTheDocument();
   expect(
-    within(c.getByLabelText(PLAIN_LAND)).queryByText("hasChild")
+    within(c.getByLabelText(Terrain.PlainLand)).queryByText("hasChild")
   ).toBeNull();
 });
