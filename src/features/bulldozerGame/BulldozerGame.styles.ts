@@ -25,6 +25,13 @@ const styles = createStyles({
     padding: 16,
     margin: 8,
   },
+  title: {
+    margin: 16,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    transition: "all 1s",
+  },
 });
 
 export default styles;

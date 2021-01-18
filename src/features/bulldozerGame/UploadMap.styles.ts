@@ -13,9 +13,6 @@ const styles = createStyles({
     justifyContent: "center",
     flexWrap: "wrap",
   },
-  title: {
-    margin: 16,
-  },
   button: {
     margin: 16,
   },

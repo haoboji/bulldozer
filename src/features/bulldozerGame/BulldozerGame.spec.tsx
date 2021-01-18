@@ -8,6 +8,7 @@ import { Terrain } from "./state/constant";
 import BulldozerGame from "./BulldozerGame";
 import { SET_SITE_MAP } from "./state/actionTypes";
 import { initialGameState } from "./state/gameReducer";
+import { advanceBulldozer, endSimuation } from "./state/bulldozerActions";
 
 test("bulldozer game layout before/after uploading map", () => {
   const s = createAppStore();
@@ -16,17 +17,43 @@ test("bulldozer game layout before/after uploading map", () => {
       <BulldozerGame />
     </Provider>
   );
-  expect(c.getByText(/Upload site map/i)).toBeInTheDocument();
-  expect(c.queryByText(/advance/i)).toBeNull();
+  // upload page
+  expect(
+    c.getByRole("button", { name: /Upload site map/i })
+  ).toBeInTheDocument();
+  // control panel
+  expect(c.queryByRole("button", { name: /advance/i })).toBeNull();
+  // activity list
   expect(c.queryByText(/activity/i)).toBeNull();
-  expect(c.queryByText(/command/i)).toBeNull();
+  // command list
+  expect(c.queryByText(/Command List/i)).toBeNull();
+  // Map Legend
+  expect(c.queryByText(/Map Legend/i)).toBeNull();
+  // bulldozer
   expect(c.queryByTestId("bulldozer-icon")).toBeNull();
   s.dispatch(setSiteMap([[Terrain.PlainLand]]));
-  expect(c.queryByText(/Upload site map/i)).toBeNull();
-  expect(c.getByText(/advance/i)).toBeInTheDocument();
+  expect(c.queryByRole("button", { name: /Upload site map/i })).toBeNull();
+  expect(c.getByRole("button", { name: /advance/i })).toBeInTheDocument();
   expect(c.getByText(/activity/i)).toBeInTheDocument();
-  expect(c.getByText(/command/i)).toBeInTheDocument();
+  expect(c.getByText(/Command List/i)).toBeInTheDocument();
+  expect(c.getByText(/Map Legend/i)).toBeInTheDocument();
   expect(c.getAllByTestId("bulldozer-icon").length).toBe(2);
+});
+
+test("bulldozer game layout before/after ending simulation", () => {
+  const s = createAppStore();
+  const c = render(
+    <Provider store={s}>
+      <BulldozerGame />
+    </Provider>
+  );
+  s.dispatch(setSiteMap([[Terrain.PlainLand]]));
+  s.dispatch(advanceBulldozer());
+  expect(c.getByText(/Site Clearing Simulation/i)).toBeInTheDocument();
+  expect(c.queryByText(/game over/i)).toBeNull();
+  s.dispatch(endSimuation());
+  expect(c.getByText(/game over/i)).toBeInTheDocument();
+  expect(c.queryByText(/Site Clearing Simulation/i)).toBeNull();
 });
 
 test("upload map via ui", async () => {

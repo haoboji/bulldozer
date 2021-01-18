@@ -30,9 +30,6 @@ const UploadMap = (props: UploadMapProps): JSX.Element => {
   };
   return (
     <div className={clsx(classes.root, className)} {...otherProps}>
-      <Typography className={classes.title} variant="h4" align="center">
-        Site Clearing Simulation
-      </Typography>
       <Typography variant="h6" align="center">
         Please upload a site map to begin the simulation
       </Typography>
