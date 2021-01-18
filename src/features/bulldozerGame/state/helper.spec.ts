@@ -1,5 +1,11 @@
 import { Terrain } from "./constant";
-import { isLocationValid, parseFile, parseMap, updateMapTile } from "./helper";
+import {
+  calculateUnclearedCost,
+  isLocationValid,
+  parseFile,
+  parseMap,
+  updateMapTile,
+} from "./helper";
 import { Location, Map } from "./bulldozer";
 
 test("Validate bulldozer location", () => {
@@ -43,4 +49,12 @@ test("Update map tile", () => {
     [Terrain.PlainLand, Terrain.RockyLand],
     [Terrain.ClearedLand, Terrain.ProtectedTree],
   ]);
+});
+
+test("Calculate uncleared cost", () => {
+  const map: Map = [
+    [Terrain.PlainLand, Terrain.RockyLand, Terrain.ClearedLand],
+    [Terrain.RemovableTree, Terrain.ProtectedTree, Terrain.ClearedLand],
+  ];
+  expect(calculateUnclearedCost(map)).toBe(9);
 });

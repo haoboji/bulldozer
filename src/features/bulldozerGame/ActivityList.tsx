@@ -1,6 +1,5 @@
 import { makeStyles, Paper } from "@material-ui/core";
 import clsx from "clsx";
-import { sum } from "mathjs";
 import React from "react";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import config from "../../app/config";
@@ -10,6 +9,7 @@ import { Terrain } from "./state/constant";
 
 export interface ActivityListProps {
   activities: Activity[];
+  unclearedCost?: number;
   totalCost?: number;
 }
 
@@ -33,27 +33,23 @@ const ActivityHeader = () => {
   );
 };
 
-const TotalCostFooter = (props: ActivityListProps) => {
+interface ActivityFooterProps {
+  name: string;
+  cost: number;
+}
+
+const ActivityFooter = (props: ActivityFooterProps) => {
   const classes = makeStyles(styles)();
-  const { activities, totalCost } = props;
+  const { name, cost } = props;
   return (
     <div className={clsx(classes.item, classes.borderTop, classes.footer)}>
       <span className={classes.name}>
-        <b>Total Cost</b>
+        <b>{name}</b>
       </span>
       <span className={classes.location}></span>
       <span className={classes.fuel}></span>
       <span className={classes.cost}>
-        <b>
-          {totalCost ??
-            sum(
-              activities.map((a) =>
-                a.terrain === Terrain.ProtectedTree
-                  ? 0
-                  : config.fuelUsage[a.terrain] * config.itemCost.fuel
-              )
-            )}
-        </b>
+        <b>{cost}</b>
       </span>
     </div>
   );
@@ -84,7 +80,7 @@ const makeItems = (activities: ActivityListProps["activities"]) => {
 };
 
 const ActivityList = (props: ActivityListProps): JSX.Element => {
-  const { activities, totalCost } = props;
+  const { activities, unclearedCost, totalCost } = props;
   const classes = makeStyles(styles)();
 
   return (
@@ -98,7 +94,12 @@ const ActivityList = (props: ActivityListProps): JSX.Element => {
       >
         {makeItems(activities)}
       </FixedSizeList>
-      <TotalCostFooter activities={activities} totalCost={totalCost} />
+      {unclearedCost !== undefined && (
+        <ActivityFooter name="Cost of uncleared squares" cost={unclearedCost} />
+      )}
+      {totalCost !== undefined && (
+        <ActivityFooter name="Total Cost" cost={totalCost} />
+      )}
     </Paper>
   );
 };

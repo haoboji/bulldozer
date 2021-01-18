@@ -17,7 +17,8 @@ const BulldozerGame = (): JSX.Element => {
   const classes = makeStyles(styles)();
   const dispatch = useDispatch();
   const game = useSelector((s: AppState) => s.game);
-  const { map, bulldozer, commands, activities, totalCost } = game;
+  const { map, bulldozer } = game;
+  const { commands, activities, totalCost, unclearedCost } = game;
   const handleUpload = (fileList: FileList | null) => {
     if (fileList) {
       uploadSiteMap(dispatch, fileList);
@@ -56,7 +57,11 @@ const BulldozerGame = (): JSX.Element => {
             <CommandList commands={commands} />
           </div>
           <div>
-            <ActivityList activities={activities} totalCost={totalCost} />
+            <ActivityList
+              activities={activities}
+              totalCost={totalCost}
+              unclearedCost={unclearedCost}
+            />
           </div>
         </div>
       )}

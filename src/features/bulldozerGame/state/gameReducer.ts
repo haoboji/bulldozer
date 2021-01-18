@@ -14,7 +14,11 @@ import {
   Terrain,
 } from "./constant";
 import { add, multiply } from "mathjs";
-import { isLocationValid, updateMapTile } from "./helper";
+import {
+  calculateUnclearedCost,
+  isLocationValid,
+  updateMapTile,
+} from "./helper";
 import config from "../../../app/config";
 
 export interface GameState {
@@ -23,7 +27,8 @@ export interface GameState {
   bulldozer: Bulldozer;
   commands: Command[];
   activities: Activity[];
-  totalCost: number;
+  unclearedCost?: number;
+  totalCost?: number;
 }
 
 const initialBulldozer: Bulldozer = {
@@ -37,7 +42,56 @@ export const initialGameState: GameState = {
   status: GameStatus.Starting,
   commands: [],
   activities: [],
-  totalCost: 0,
+};
+
+const advanceBulldozer = (state: GameState) => {
+  const { bulldozer, map } = state;
+  if (!map) {
+    return state;
+  }
+  const { activities, commands, totalCost, unclearedCost } = state;
+  const { location, direction } = bulldozer;
+  const newLocation = add(location, direction) as Location;
+  const [x, y] = newLocation;
+  const terrain: Terrain | undefined = map[-y]?.[x];
+  const isValidMove = isLocationValid(newLocation, state.map);
+  const newStatus = isValidMove ? GameStatus.Started : GameStatus.Error;
+  // Mark target tile to cleared
+  const newMap =
+    isValidMove && terrain !== Terrain.ClearedLand
+      ? updateMapTile(map, Terrain.ClearedLand, -y, x)
+      : map;
+  // Log commands
+  const newCommands = [...commands, Command.Advance];
+  // Log activity
+  const newActivity = isValidMove &&
+    terrain &&
+    terrain !== Terrain.ProtectedTree && {
+      terrain,
+      location: newLocation,
+    };
+  const newActivities = newActivity ? [...activities, newActivity] : activities;
+  // Calculate uncleared cost
+  const newUnclearedCost = isValidMove
+    ? unclearedCost
+    : calculateUnclearedCost(map);
+  // Cache total cost
+  const addedActivityCost = newActivity
+    ? config.fuelUsage[newActivity.terrain] * config.itemCost.fuel
+    : 0;
+  const newTotalCost =
+    (totalCost || 0) + (addedActivityCost || 0) + (newUnclearedCost || 0);
+
+  return {
+    ...state,
+    status: newStatus,
+    map: newMap,
+    activities: newActivities,
+    commands: newCommands,
+    totalCost: newTotalCost,
+    unclearedCost: newUnclearedCost,
+    bulldozer: { ...bulldozer, location: newLocation },
+  };
 };
 
 const game = (
@@ -49,48 +103,7 @@ const game = (
       return { ...state, map: action.map };
     }
     case ADVANCE_BULLDOZER: {
-      const { activities, bulldozer, map, commands, totalCost } = state;
-      if (!map) {
-        return state;
-      }
-      const { location, direction } = bulldozer;
-      const newLocation = add(location, direction) as Location;
-      const [x, y] = newLocation;
-      const terrain: Terrain | undefined = map[-y]?.[x];
-      const isValidMove = isLocationValid(newLocation, state.map);
-      const newStatus = isValidMove ? GameStatus.Started : GameStatus.Error;
-      // Mark target tile to cleared
-      const newMap =
-        isValidMove && terrain !== Terrain.ClearedLand
-          ? updateMapTile(map, Terrain.ClearedLand, -y, x)
-          : map;
-      // Log commands
-      const newCommands = [...commands, Command.Advance];
-      // Log activity
-      const newActivity = isValidMove &&
-        terrain &&
-        terrain !== Terrain.ProtectedTree && {
-          terrain,
-          location: newLocation,
-        };
-      const newActivities = newActivity
-        ? [...activities, newActivity]
-        : activities;
-      // Cache total cost
-      const newTotalCost = newActivity
-        ? totalCost +
-          config.fuelUsage[newActivity.terrain] * config.itemCost.fuel
-        : totalCost;
-
-      return {
-        ...state,
-        status: newStatus,
-        map: newMap,
-        activities: newActivities,
-        commands: newCommands,
-        totalCost: newTotalCost,
-        bulldozer: { ...bulldozer, location: newLocation },
-      };
+      return advanceBulldozer(state);
     }
     case ROTATE_BULLDOZER: {
       const { commands, bulldozer } = state;
@@ -106,9 +119,12 @@ const game = (
       };
     }
     case END_SIMULATION: {
-      const { commands } = state;
+      const { commands, totalCost } = state;
+      const unclearedCost = calculateUnclearedCost(state.map || []);
       return {
         ...state,
+        unclearedCost,
+        totalCost: (totalCost || 0) + unclearedCost,
         commands: [...commands, Command.Quit],
         status: GameStatus.Ended,
       };

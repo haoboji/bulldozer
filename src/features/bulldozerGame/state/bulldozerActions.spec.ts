@@ -131,7 +131,7 @@ test("Mark land as cleared upon visiting", () => {
   expect(s.getState().game.map).toEqual([[Terrain.ClearedLand]]);
 });
 
-test("total cost from activities", () => {
+test("total cost from ongoing activities", () => {
   const map: Map = [[Terrain.PlainLand, Terrain.RockyLand]];
   const s = createAppStore();
   s.dispatch(setSiteMap(map));
@@ -139,4 +139,30 @@ test("total cost from activities", () => {
   expect(s.getState().game.totalCost).toEqual(1);
   s.dispatch(advanceBulldozer());
   expect(s.getState().game.totalCost).toEqual(3);
+});
+
+test("total/uncleared cost upon invalid move", () => {
+  const map: Map = [
+    [Terrain.PlainLand, Terrain.ProtectedTree],
+    [Terrain.RemovableTree, Terrain.ProtectedTree],
+  ];
+  const s = createAppStore();
+  s.dispatch(setSiteMap(map));
+  s.dispatch(advanceBulldozer());
+  s.dispatch(advanceBulldozer());
+  expect(s.getState().game.unclearedCost).toEqual(3);
+  expect(s.getState().game.totalCost).toEqual(4);
+});
+
+test("total/uncleared cost upon ending simulation", () => {
+  const map: Map = [
+    [Terrain.PlainLand, Terrain.ProtectedTree],
+    [Terrain.RemovableTree, Terrain.ProtectedTree],
+  ];
+  const s = createAppStore();
+  s.dispatch(setSiteMap(map));
+  s.dispatch(advanceBulldozer());
+  s.dispatch(endSimuation());
+  expect(s.getState().game.unclearedCost).toEqual(3);
+  expect(s.getState().game.totalCost).toEqual(4);
 });

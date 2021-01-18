@@ -1,3 +1,4 @@
+import config from "../../../app/config";
 import { Location, Map } from "./bulldozer";
 import { Terrain } from "./constant";
 
@@ -69,3 +70,17 @@ export const parseMap = (content: string): Map => {
   }
   return rawMap as Map;
 };
+
+export const calculateUnclearedCost = (m: Map): number =>
+  m.reduce(
+    (rowAccu, row) =>
+      rowAccu +
+      row.reduce(
+        (colAccu, col) =>
+          col !== Terrain.ClearedLand && col !== Terrain.ProtectedTree
+            ? colAccu + config.itemCost.uncleard
+            : colAccu,
+        0
+      ),
+    0
+  );
