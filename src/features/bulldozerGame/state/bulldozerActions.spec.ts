@@ -1,6 +1,10 @@
 import { createAppStore } from "../../../app/store";
 import { Bulldozer } from "./bulldozer";
-import { advanceBulldozer, rotateBulldozer } from "./bulldozerActions";
+import {
+  advanceBulldozer,
+  endSimuation,
+  rotateBulldozer,
+} from "./bulldozerActions";
 import {
   CLEARED_LAND,
   Command,
@@ -18,7 +22,7 @@ import {
 } from "./constant";
 import { initialGameState } from "./gameReducer";
 import { SiteMap } from "./site";
-import { endSimuation, setSiteMap } from "./siteActions";
+import { setSiteMap } from "./siteActions";
 
 test("Advance bulldozer", () => {
   const bulldozer: Bulldozer = { location: [1, 1], direction: [1, 0] };
@@ -41,6 +45,13 @@ test("Turn bulldozer left", () => {
   const s = createAppStore({ game: { ...initialGameState, bulldozer } });
   s.dispatch(rotateBulldozer(ROTATION_LEFT));
   expect(s.getState().game.bulldozer.direction).toEqual(DIRECTION_WEST);
+});
+
+test("End simulation", () => {
+  const s = createAppStore();
+  expect(s.getState().game.status).toEqual(GameStatus.Starting);
+  s.dispatch(endSimuation());
+  expect(s.getState().game.status).toEqual(GameStatus.Ended);
 });
 
 test("Invalid bulldozer move", () => {

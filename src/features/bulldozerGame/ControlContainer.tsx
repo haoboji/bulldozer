@@ -2,14 +2,17 @@ import { makeStyles, ButtonProps, Button, Paper } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ControlContainer.styles";
-import { advanceBulldozer, rotateBulldozer } from "./state/bulldozerActions";
+import {
+  advanceBulldozer,
+  endSimuation,
+  rotateBulldozer,
+} from "./state/bulldozerActions";
 import {
   Command,
   GameStatus,
   ROTATION_LEFT,
   ROTATION_RIGHT,
 } from "./state/constant";
-import { endSimuation } from "./state/siteActions";
 import config from "../../app/config";
 import { AppState } from "../../app/rootReducer";
 
