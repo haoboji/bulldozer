@@ -12,6 +12,12 @@ const styles = createStyles({
     alignItems: "center",
     paddingLeft: 8,
   },
+  header: {
+    height: 40,
+    borderBottomStyle: "solid",
+    borderBottomColor: "gainsboro",
+    borderBottomWidth: 1,
+  },
 });
 
 export default styles;

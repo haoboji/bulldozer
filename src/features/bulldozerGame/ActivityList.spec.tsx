@@ -9,10 +9,10 @@ test("ActivityList component", () => {
     { terrain: PLAIN_LAND, location: [12, 34] },
     { terrain: REMOVABLE_TREE, location: [56, 78] },
   ];
-  const c = render(<ActivityList activities={activities} />);
+  const c = render(<ActivityList activities={activities} totalCost={999} />);
   expect(c.getByText(/Clearing plain land/i)).toBeInTheDocument();
   expect(c.getByText(/Clearing land containing a tree/i)).toBeInTheDocument();
   expect(c.getByText("[12,34]")).toBeInTheDocument();
   expect(c.getByText("[56,78]")).toBeInTheDocument();
-  expect(c.container).toMatchSnapshot();
+  expect(c.getByText("999")).toBeInTheDocument();
 });

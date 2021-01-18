@@ -4,6 +4,12 @@ const styles = createStyles({
   root: {
     margin: 8,
   },
+  header: {
+    height: 40,
+  },
+  footer: {
+    height: 40,
+  },
   item: {
     display: "flex",
     flexDirection: "row",
@@ -11,11 +17,15 @@ const styles = createStyles({
     textOverflow: "ellipsis",
     alignItems: "center",
     paddingLeft: 8,
+    borderWidth: 0,
+    borderStyle: "solid",
+    borderColor: "gainsboro",
   },
   borderTop: {
     borderTopWidth: 1,
-    borderTopStyle: "solid",
-    borderTopColor: "gainsboro",
+  },
+  borderBottom: {
+    borderBottomWidth: 1,
   },
   name: {
     width: 230,
