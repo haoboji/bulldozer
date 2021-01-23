@@ -1,6 +1,6 @@
-import { createStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     position: "absolute",
     width: "100%",
@@ -36,4 +36,4 @@ const styles = createStyles({
   },
 });
 
-export default styles;
+export default useStyles;

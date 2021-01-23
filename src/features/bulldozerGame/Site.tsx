@@ -6,8 +6,8 @@ import {
 } from "react-window";
 import Land from "./Land";
 import { Location, Map } from "./state/bulldozer";
-import { makeStyles, Paper } from "@material-ui/core";
-import styles from "./Site.styles";
+import { Paper } from "@material-ui/core";
+import useStyles from "./Site.styles";
 
 export interface SiteProps extends Partial<FixedSizeGridProps> {
   map: Map;
@@ -35,7 +35,7 @@ const makeTiles = (
 
 const Site = (props: SiteProps): JSX.Element => {
   const { map, TileChildren, ...otherProps } = props;
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const children = makeTiles(map, TileChildren);
   const rootProps: FixedSizeGridProps = {
     columnCount: map[0].length + 2,

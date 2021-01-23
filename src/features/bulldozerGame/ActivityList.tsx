@@ -1,9 +1,9 @@
-import { makeStyles, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import clsx from "clsx";
 import React, { useEffect, useRef } from "react";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
 import config from "../../app/config";
-import styles from "./ActivityList.styles";
+import useStyles from "./ActivityList.styles";
 import { Activity } from "./state/bulldozer";
 import { Terrain } from "./state/constant";
 
@@ -14,7 +14,7 @@ export interface ActivityListProps {
 }
 
 const ActivityHeader = () => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   return (
     <div className={clsx(classes.item, classes.borderBottom, classes.header)}>
       <span className={classes.name}>
@@ -39,7 +39,7 @@ interface ActivityFooterProps {
 }
 
 const ActivityFooter = (props: ActivityFooterProps) => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const { name, cost } = props;
   return (
     <div className={clsx(classes.item, classes.borderTop, classes.footer)}>
@@ -58,7 +58,7 @@ const ActivityFooter = (props: ActivityFooterProps) => {
 const makeItems = (activities: ActivityListProps["activities"]) => {
   const Row = (props: ListChildComponentProps) => {
     const { style, index } = props;
-    const classes = makeStyles(styles)();
+    const classes = useStyles();
     const { terrain, location } = activities[index];
     const { activityName, fuelUsage, itemCost } = config;
     const fuel = terrain !== Terrain.ProtectedTree ? fuelUsage[terrain] : 0;
@@ -81,7 +81,7 @@ const makeItems = (activities: ActivityListProps["activities"]) => {
 
 const ActivityList = (props: ActivityListProps): JSX.Element => {
   const { activities, unclearedCost, totalCost } = props;
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const last = activities.length - 1;
   const listRef = useRef<null | FixedSizeList>(null);
   useEffect(() => {

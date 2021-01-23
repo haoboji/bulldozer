@@ -1,7 +1,6 @@
 import { Paper, PaperProps } from "@material-ui/core";
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import styles from "./Land.styles";
+import useStyles from "./Land.styles";
 import { Terrain } from "./state/constant";
 import clsx from "clsx";
 
@@ -11,7 +10,7 @@ export interface LandProps extends PaperProps {
 
 const Land = (props: LandProps): JSX.Element => {
   const { terrain, children, className, ...paperProps } = props;
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const classNames = clsx(
     classes.root,
     terrain === Terrain.ProtectedTree && classes.green,

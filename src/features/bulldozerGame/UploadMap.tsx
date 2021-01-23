@@ -1,13 +1,7 @@
-import {
-  Button,
-  ButtonProps,
-  Link,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Button, ButtonProps, Link, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
-import styles from "./UploadMap.styles";
+import useStyles from "./UploadMap.styles";
 
 export interface UploadMapProps
   extends React.DetailedHTMLProps<
@@ -19,7 +13,7 @@ export interface UploadMapProps
 
 const UploadMap = (props: UploadMapProps): JSX.Element => {
   const { className, onChangeUploadMap, ...otherProps } = props;
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     onChangeUploadMap?.(e.target.files);
   const buttonProps: ButtonProps = {

@@ -1,13 +1,13 @@
-import { makeStyles, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import React from "react";
-import styles from "./MapLegend.styles";
+import useStyles from "./MapLegend.styles";
 import Land from "./Land";
 import { Terrain } from "./state/constant";
 import config from "../../app/config";
 import Bulldozer from "./Bulldozer";
 
 const MapLegend = (): JSX.Element => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   return (
     <Paper className={classes.root} variant="outlined">
       <div className={classes.header}>

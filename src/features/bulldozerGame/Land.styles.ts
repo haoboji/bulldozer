@@ -1,6 +1,6 @@
-import { createStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     display: "flex",
     alignItems: "center",
@@ -30,4 +30,4 @@ const styles = createStyles({
   },
 });
 
-export default styles;
+export default useStyles;

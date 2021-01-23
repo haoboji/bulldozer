@@ -1,7 +1,7 @@
-import { makeStyles, ButtonProps, Button, Paper } from "@material-ui/core";
+import { ButtonProps, Button, Paper } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./ControlContainer.styles";
+import useStyles from "./ControlContainer.styles";
 import {
   advanceBulldozer,
   endSimuation,
@@ -17,7 +17,7 @@ import config from "../../app/config";
 import { AppState } from "../../app/rootReducer";
 
 const GameControl = (): JSX.Element => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const status = useSelector((s: AppState) => s.game.status);
   const handleAdvance = () => dispatch(advanceBulldozer());

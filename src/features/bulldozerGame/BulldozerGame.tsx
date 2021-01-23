@@ -1,11 +1,11 @@
-import { makeStyles, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { deepEqual } from "mathjs";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../app/rootReducer";
 import ActivityList from "./ActivityList";
 import Bulldozer from "./Bulldozer";
-import styles from "./BulldozerGame.styles";
+import useStyles from "./BulldozerGame.styles";
 import CommandList from "./CommandList";
 import GameControl from "./ControlContainer";
 import MapLegend from "./MapLegend";
@@ -15,7 +15,7 @@ import { uploadSiteMap } from "./state/siteActions";
 import UploadMap from "./UploadMap";
 
 const BulldozerGame = (): JSX.Element => {
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const game = useSelector((s: AppState) => s.game);
   const { map, bulldozer } = game;
